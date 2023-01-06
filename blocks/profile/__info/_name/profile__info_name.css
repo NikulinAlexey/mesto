@@ -1,3 +1,4 @@
 .profile__info_name {
   display: flex;
+  align-items: center;
 }

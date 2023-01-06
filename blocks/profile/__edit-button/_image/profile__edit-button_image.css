@@ -1,4 +1,6 @@
-.profile__add-button_image {
+.profile__edit-button_image {
   margin: auto;
   padding: 0;
+  width: 10px;
+  height: 10px;
 }
