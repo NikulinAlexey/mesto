@@ -2,4 +2,11 @@
   width: 22px;
   height: 19px;
   margin: auto 0;
+  opacity: 1;
+  transition: opacity .3s ease-in-out;
+}
+
+.element__like:hover {
+  opacity: .5; 
+  cursor: pointer;
 }
