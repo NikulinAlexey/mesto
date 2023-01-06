@@ -11,5 +11,5 @@ function popUpOff () {
     popUp.style = 'display: none';
 }
 editButton.addEventListener('click', popUpOn);
-closeIcon.addEventListener('click', popUpOff)
+closeIcon.addEventListener('click', popUpOff);
 
