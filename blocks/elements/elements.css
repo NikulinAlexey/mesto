@@ -1,5 +1,5 @@
 .elements {
-  width: 880px;
+  width: 100%;
   box-sizing: border-box;
   display: grid;
   gap: 17px;
