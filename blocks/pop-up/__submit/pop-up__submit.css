@@ -1,7 +1,7 @@
 .pop-up__submit {
   background-color: black;
   color: white;
-  width: 358px;
+  width: 84%;
   height: 50px;
   padding: 0;
   margin: 0 auto;
@@ -16,4 +16,11 @@
 .pop-up__submit:hover {
   opacity: .8;
   cursor: pointer;
+}
+
+@media screen and (max-width: 680px) {
+  .pop-up__submit {
+    margin-bottom: 25px;
+    margin-top: auto;
+  }
 }

@@ -1,12 +1,10 @@
 .pop-up__job {
-  font-size: inherit;
-  line-height: inherit;
   font-family: inherit;
   font-weight: 400;
   font-size: 14px;
   line-height: 17px;
   margin: 0 auto 48px auto;
-  width: 358px;
+  width: 84%;
   padding: 0;
   border: none;
   height: 30px;
@@ -19,4 +17,11 @@
   outline-style: solid;
   outline-width: 2px;
   border-radius: 2px;
+}
+
+@media screen and (max-width: 680px) {
+  .pop-up__job {
+    margin-left: auto;
+    margin-right: auto;
+  }
 }
