@@ -14,3 +14,10 @@
     margin: 0 auto;
   }
 }
+
+@media screen and (max-width: 500px) {
+  .profile__info_job {
+    font-size: 14px;
+    line-height: 17px;
+  }  
+}

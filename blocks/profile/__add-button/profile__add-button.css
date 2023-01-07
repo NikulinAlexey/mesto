@@ -25,12 +25,6 @@ cursor: pointer;
   }
 }
 
-@media screen and (max-width: 750px) {
-  .profile__add-button {
-    width: 50px;
-  }
-}
-
 @media screen and (max-width: 680px) {
   .profile__add-button {
     width: 100%;
