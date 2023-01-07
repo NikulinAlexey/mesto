@@ -8,3 +8,9 @@
   font-size: 18px;
   line-height: 22px;
 }
+
+@media screen and (max-width: 680px) {
+  .profile__info_job {
+    margin: 0 auto;
+  }
+}

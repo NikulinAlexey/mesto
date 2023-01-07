@@ -4,6 +4,7 @@
   margin: auto 0;
   opacity: 1;
   transition: opacity .3s ease-in-out;
+  overflow: hidden;
 }
 
 .element__like:hover {
