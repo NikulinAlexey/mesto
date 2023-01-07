@@ -25,6 +25,7 @@
 @import url(../blocks/profile/__info/profile__info.css);
 @import url(../blocks/profile/__info/_name/profile__info_name.css);
 @import url(../blocks/profile/__info/_job/profile__info_job.css);
+@import url(../blocks/profile/__main/profile__main.css);
 
 @import url(../blocks/elements/elements.css);
 @import url(../blocks/element/element.css);
