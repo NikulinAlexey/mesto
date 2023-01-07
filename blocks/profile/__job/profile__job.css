@@ -1,4 +1,4 @@
-.profile__info_job {
+.profile__job {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
@@ -10,13 +10,13 @@
 }
 
 @media screen and (max-width: 680px) {
-  .profile__info_job {
+  .profile__job {
     margin: 0 auto;
   }
 }
 
 @media screen and (max-width: 500px) {
-  .profile__info_job {
+  .profile__job {
     font-size: 14px;
     line-height: 17px;
   }  

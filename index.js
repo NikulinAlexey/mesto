@@ -20,8 +20,8 @@ saveButton.addEventListener('click', popUpOff);
 let nameInput = document.querySelector('.pop-up__name');
 let jobInput = document.querySelector('.pop-up__job');
 //Получаем текст имени и профессии
-let nameProfile = document.querySelector('.profile__info_name');
-let jobProfile = document.querySelector('.profile__info_job');
+let nameProfile = document.querySelector('.profile__name');
+let jobProfile = document.querySelector('.profile__job');
 
 // Делаем так, чтобы имя и профессия были в input при открывании формы pop-up
 nameInput.value = nameProfile.innerText;
