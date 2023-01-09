@@ -1,5 +1,5 @@
 .element__like {
-  background-image: url(/images/like.svg);
+  background-image: url(../../../images/like.svg);
   background-color: #fff;
   background-size: cover;
   width: 22px;
