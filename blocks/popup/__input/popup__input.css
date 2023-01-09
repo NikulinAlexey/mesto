@@ -4,12 +4,16 @@
   font-weight: 400;
   font-size: 14px;
   line-height: 17px;
-  margin: 0 auto 48px auto;
+  margin: 0 auto 30px auto;
   width: 84%;
   padding: 0;
   border: none;
   height: 30px;
   border-bottom: 1px solid rgba(0, 0, 0, .2);
+}
+
+.popup__input:nth-of-type(2n) {
+  margin-bottom: 0;
 }
 
 .popup__input:focus {
@@ -22,7 +26,6 @@
 
 @media screen and (max-width: 680px) {
   .popup__input {
-    margin-left: auto;
-    margin-right: auto;
+    margin-bottom: 25px;
   }
 }
