@@ -1,9 +1,9 @@
 @font-face {
   font-family: 'Inter';
   font-style:  normal;
-  font-weight: bold;
-  src: url(../vendor/Inter-Bold.woff2) format("woff2"),
-       url(../vendor/Inter-Bold.woff) format("woff");
+  font-weight: 500;
+  src: url(../vendor/Inter-Medium.woff2) format("woff2"),
+       url(../vendor/Inter-Medium.woff) format("woff");
 }
 
 @font-face {

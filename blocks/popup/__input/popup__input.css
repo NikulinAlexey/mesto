@@ -1,9 +1,10 @@
-.pop-up__name {
+.popup__input {
+  display: block;
   font-family: inherit;
   font-weight: 400;
   font-size: 14px;
   line-height: 17px;
-  margin: 0 auto 30px auto;
+  margin: 0 auto 48px auto;
   width: 84%;
   padding: 0;
   border: none;
@@ -11,7 +12,7 @@
   border-bottom: 1px solid rgba(0, 0, 0, .2);
 }
 
-.pop-up__name:focus {
+.popup__input:focus {
   box-shadow: 0 0 8px #709CF1;
   outline-color: #709CF1;
   outline-style: solid;
@@ -20,7 +21,8 @@
 }
 
 @media screen and (max-width: 680px) {
-  .pop-up__name {
-    margin-bottom: 25px;
+  .popup__input {
+    margin-left: auto;
+    margin-right: auto;
   }
 }
