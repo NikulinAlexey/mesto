@@ -4,7 +4,7 @@
   display: grid;
   gap: 17px;
   grid-template-columns: repeat(auto-fit, minmax(282px, 1fr));
-  grid-template-rows: repeat(2, minmax(361px, max-content));
+  grid-template-rows: repeat(2, minmax(min-content , max-content));
   padding: 0;
   margin: 0 auto 67px auto;
 }
@@ -16,6 +16,6 @@
     margin-right: 19px;
     margin-bottom: 48px;
     gap: 20px;
-    grid-template-rows: repeat(6, 361px);
+    grid-template-rows: repeat(6, 1fr);
   }
 }
