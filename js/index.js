@@ -10,9 +10,8 @@ let formElement = document.querySelector('.popup__form');
 let element = document.querySelector('.element');
 let elementsImage = document.querySelectorAll('.element__image');
 let elementsTitle = document.querySelectorAll('.element__title');
-const likeButton = element.querySelector('.element__like');
+const likeButton = document.querySelector('.element__like');
 const cards = document.querySelectorAll('.element');
-
 const initialCards = [
     {
       name: 'Архыз',
@@ -40,7 +39,15 @@ const initialCards = [
     }
   ];
 
-  startingCards();
+  
+function startingCards () {
+    for (let i = 0; i < initialCards.length; i++) {
+      elementsTitle[i].textContent = `${initialCards[i].name}`;
+      elementsImage[i].setAttribute('src', `${initialCards[i].link}`);
+    }
+}
+
+startingCards();
 
 function openPopup () {
     popUp.classList.add('popup_opened');
@@ -61,14 +68,6 @@ function handleFormSubmit (evt) {
     closePopup();
 }
 
-let elementsArray = [];
-
-function startingCards () {
-    for (let i = 0; i < initialCards.length; i++) {
-      elementsTitle[i].textContent = `${initialCards[i].name}`;
-      elementsImage[i].setAttribute('src', `${initialCards[i].link}`);
-    }
-}
 
 likeButton.addEventListener('click', function (evt) {
     evt.target.classList.toggle('element__like_active')
