@@ -7,7 +7,34 @@ let jobInput = document.querySelector('.popup__input_type_job');
 let nameProfile = document.querySelector('.profile__name');
 let jobProfile = document.querySelector('.profile__job');
 let formElement = document.querySelector('.popup__form');
-let likeButton = document.querySelector('.element__like');
+let element = document.querySelector('.element')
+let likeButton = element.querySelector('.element__like');
+const initialCards = [
+    {
+      name: 'Архыз',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+    },
+    {
+      name: 'Челябинская область',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+    },
+    {
+      name: 'Иваново',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+    },
+    {
+      name: 'Камчатка',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+    },
+    {
+      name: 'Холмогорский район',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+    },
+    {
+      name: 'Байкал',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+    }
+  ]; 
 
 function openPopup () {
     popUp.classList.add('popup_opened');
