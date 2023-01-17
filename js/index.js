@@ -21,8 +21,10 @@ let elements = document.querySelector('.elements');
 let elementsImage = document.querySelectorAll('.element__image');
 let elementsTitle = document.querySelectorAll('.element__title');
 
-const likeButton = document.querySelector('.element__like');
-const deleteButton =document.querySelector('.element__trash');
+const deleteButton = document.querySelectorAll('.element__trash');
+const likeButton = document.querySelectorAll('.element__like');
+
+const cardTemplate = document.querySelector('#elementTemplate').content;
 const initialCards = [
     {
       name: 'Архыз',
@@ -51,27 +53,29 @@ const initialCards = [
 ];
 
 
-function startingCards () {
-  for (let i = 0; i < initialCards.length; i++) {
-    elementsTitle[i].textContent = `${initialCards[i].name}`;
-    elementsImage[i].setAttribute('src', `${initialCards[i].link}`);
-  }
+function creatStartingCards () {
+  initialCards.forEach(function(el,index) {
+    let newCard = cardTemplate.querySelector('.element').cloneNode(true);
+    newCard.querySelector('.element__title').textContent = `${initialCards[index].name}`;
+    newCard.querySelector('.element__image').setAttribute('src', `${initialCards[index].link}`);
+    newCard.querySelector('.element__like').addEventListener('click', function (evt) {
+    evt.target.classList.toggle('element__like_active');
+});
+    elements.append(newCard);
+  })
 }
-startingCards();
+creatStartingCards();
 
 function addNewCard () {
-  const cardTemplate = document.querySelector('#elementTemplate').content;
   let newCard = cardTemplate.querySelector('.element').cloneNode(true);
-  
+
   newCard.querySelector('.element__title').textContent = `${placeInput.value}`;
   newCard.querySelector('.element__image').setAttribute('src', `${linkInput.value}`);
+  newCard.querySelector('.element__like').addEventListener('click', function (evt) {
+  evt.target.classList.toggle('element__like_active');
+});
 
   elements.prepend(newCard);
-}
-
-function deleteCard () {
-  const closestElement = deleteButton.closest('.element');
-  closestElement.remove();
 }
 
 function openEditPopup () {
@@ -115,4 +119,7 @@ addButton.addEventListener('click', openAddPopup);
 closeEditIcon.addEventListener('click', closeEditPopup);
 closeAddIcon.addEventListener('click', closeAddPopup);
 
-deleteButton.addEventListener('click', deleteCard); 
+deleteButton.addEventListener('click', function () {
+  const closestElement = deleteButton.closest('.element');
+  closestElement.remove();
+}); 
