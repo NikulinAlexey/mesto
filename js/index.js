@@ -9,8 +9,8 @@ let closeAddIcon = document.querySelector('.add-popup__close-icon')
 
 let nameInput = document.querySelector('.popup__input_type_name');
 let jobInput = document.querySelector('.popup__input_type_job');
-let placeInput = document.querySelector('.popup__input_type_place');
-let linkInput = document.querySelector('.popup__input_type_link');
+let placeInput = document.querySelector('.add-popup__input_type_place');
+let linkInput = document.querySelector('.add-popup__input_type_link');
 
 let nameProfile = document.querySelector('.profile__name');
 let jobProfile = document.querySelector('.profile__job');
@@ -19,7 +19,9 @@ let addFormElement = document.querySelector('.add-popup__form');
 let element = document.querySelector('.element');
 let elements = document.querySelector('.elements');
 let elementsImage = document.querySelectorAll('.element__image');
+let elementImage = document.querySelector('.element__image');
 let elementsTitle = document.querySelectorAll('.element__title');
+let elementTitle = document.querySelector('.element__title');
 const likeButton = document.querySelector('.element__like');
 const body = document.querySelector('.body');
 const initialCards = [
@@ -58,6 +60,16 @@ function startingCards () {
 }
 startingCards();
 
+function addNewCard() {
+  const cardTemplate = document.querySelector('#elementTemplate').content;
+  let newCard = cardTemplate.querySelector('.element').cloneNode(true);
+  
+  newCard.querySelector('.element__title').textContent = `${placeInput.value}`;
+  newCard.querySelector('.element__image').setAttribute('src', `${linkInput.value}`);
+
+  elements.prepend(newCard);
+}
+
 function openAddPopup () {
     addPopUp.classList.add('popup_opened');
 }
@@ -69,10 +81,7 @@ function closeAddPopup () {
 function handleAddFormSubmit (evt) {
   evt.preventDefault(); 
   
-  //вызвать функцию создания новой карточки с параметрами input place и link
-  nameProfile.textContent = `${placeInput.value}`;
-  jobProfile.textContent = `${linkInput.value}`;
-  //
+  addNewCard();
   closeAddPopup();
 }
 
