@@ -18,10 +18,10 @@ let formElement = document.querySelector('.popup__form');
 let addFormElement = document.querySelector('.add-popup__form');
 
 let elements = document.querySelector('.elements');
+let cardItems = document.querySelectorAll('.element');
 let elementsImage = document.querySelectorAll('.element__image');
 let elementsTitle = document.querySelectorAll('.element__title');
 
-const deleteButton = document.querySelectorAll('.element__trash');
 const likeButton = document.querySelectorAll('.element__like');
 
 const cardTemplate = document.querySelector('#elementTemplate').content;
@@ -119,7 +119,13 @@ addButton.addEventListener('click', openAddPopup);
 closeEditIcon.addEventListener('click', closeEditPopup);
 closeAddIcon.addEventListener('click', closeAddPopup);
 
-deleteButton.addEventListener('click', function () {
-  const closestElement = deleteButton.closest('.element');
-  closestElement.remove();
-}); 
+const generatedElements = elements.children;
+const generatedCardsArray = Array.from(generatedElements);
+
+generatedCardsArray.forEach(function(el) {
+  el.querySelector('.element__trash').addEventListener('click', function() {
+    console.log('good')
+    el.remove()
+  })
+})
+
