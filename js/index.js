@@ -25,32 +25,31 @@ let elementsImage = document.querySelectorAll('.element__image');
 let elementsTitle = document.querySelectorAll('.element__title');
 
 const likeButton = document.querySelectorAll('.element__like');
-let addedCards = [];
 const cardTemplate = document.querySelector('#elementTemplate').content;
 const initialCards = [
     {
-      name: 'Архыз',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+      name: '1-ый пляж',
+      link: 'https://img.freepik.com/free-photo/tropical-beach_74190-188.jpg?w=1060&t=st=1674138337~exp=1674138937~hmac=e43fd03316b1bd15a13d24c5f4e6b79fe56998c9cd27758c27182ff19f0c9539'
     },
     {
-      name: 'Челябинская область',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+      name: '2-ой пляж',
+      link: 'https://img.freepik.com/free-photo/beautiful-tropical-beach-and-sea-with-coconut-palm-tree-in-paradise-island_74190-2206.jpg?w=1060&t=st=1674138337~exp=1674138937~hmac=bf111d2b3e3cb254b1b7a288464208f30b705f52df40db583d3292349b0bb4fc'
     },
     {
-      name: 'Иваново',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+      name: '3-ий пляж',
+      link: 'https://img.freepik.com/free-photo/beautiful_1203-2633.jpg?w=1060&t=st=1674138338~exp=1674138938~hmac=03482862dd0e7677abd36c57fb3a20a9afb9489b39130cc7bd58b5bc6729e363'
     },
     {
-      name: 'Камчатка',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+      name: '4-ый пляж',
+      link: 'https://img.freepik.com/free-photo/beautiful-tropical-beach-and-sea-with-chair-on-blue-sky_74190-7488.jpg?w=1060&t=st=1674138337~exp=1674138937~hmac=b51597258b850490618267c62e08fb77260ad75fce09e866c06be8ec26255523'
     },
     {
-      name: 'Холмогорский район',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+      name: '5-ый пляж',
+      link: 'https://img.freepik.com/free-photo/empty-sea-and-beach-background_1339-4265.jpg?w=1060&t=st=1674138341~exp=1674138941~hmac=34d112140b87f206bca55b9b5720e656153cf17d4e20c2d3405e86ae40512a0c'
     },
     {
-      name: 'Байкал',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+      name: '6-ой пляж',
+      link: 'https://img.freepik.com/free-photo/empty-sea-and-beach-background_74190-313.jpg?w=1060&t=st=1674138340~exp=1674138940~hmac=7e142c6411e6c1ba15f237b61d13cf0ea2b5b261a0489d5730641c5bc2ceaac4'
     }
 ];
 
@@ -137,13 +136,14 @@ closeImageIcon.addEventListener('click', function () {
   imagePopUp.classList.remove('popup_opened')
 })
 
-const startingCardsArray = Array.from(elements.children);
-startingCardsArray.forEach(function(el) {
+
+// Добавляю возможность удаления созданных вручную карточек
+// Добавляю возможность просмотра созданных вручную карточек
+const allCardsArray = Array.from(elements.children);
+allCardsArray.forEach(function(el) {
   el.querySelector('.element__trash').addEventListener('click', function() {
     el.remove();
   })
-})
-startingCardsArray.forEach(function(el) {
   el.querySelector('.element__image').addEventListener('click', function() {
     imagePopUp.querySelector('.image-popup__image').setAttribute('src', `${el.querySelector('.element__image').getAttribute('src')}`)
     imagePopUp.classList.add('popup_opened');
