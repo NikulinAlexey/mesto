@@ -22,8 +22,10 @@ let cardItems = document.querySelectorAll('.element');
 let elementsImage = document.querySelectorAll('.element__image');
 let elementsTitle = document.querySelectorAll('.element__title');
 
-const likeButton = document.querySelectorAll('.element__like');
 
+
+const likeButton = document.querySelectorAll('.element__like');
+let addedCards = [];
 const cardTemplate = document.querySelector('#elementTemplate').content;
 const initialCards = [
     {
@@ -60,7 +62,10 @@ function creatStartingCards () {
     newCard.querySelector('.element__image').setAttribute('src', `${initialCards[index].link}`);
     newCard.querySelector('.element__like').addEventListener('click', function (evt) {
     evt.target.classList.toggle('element__like_active');
-});
+    newCard.querySelector('.element__trash').addEventListener('click', function () {
+      el.remove()
+    })
+  })
     elements.append(newCard);
   })
 }
@@ -74,9 +79,13 @@ function addNewCard () {
   newCard.querySelector('.element__like').addEventListener('click', function (evt) {
   evt.target.classList.toggle('element__like_active');
 });
-
   elements.prepend(newCard);
+  newCard.querySelector('.element__trash').addEventListener('click', function(evt) {
+    evt.target.parentElement.remove()
+  })
 }
+
+
 
 function openEditPopup () {
   editPopUp.classList.add('popup_opened');
@@ -110,6 +119,7 @@ function handleAddFormSubmit (evt) {
 }
 
 
+
 formElement.addEventListener('submit', handleFormSubmit);
 addFormElement.addEventListener('submit', handleAddFormSubmit);
 
@@ -119,13 +129,10 @@ addButton.addEventListener('click', openAddPopup);
 closeEditIcon.addEventListener('click', closeEditPopup);
 closeAddIcon.addEventListener('click', closeAddPopup);
 
-const generatedElements = elements.children;
-const generatedCardsArray = Array.from(generatedElements);
-
-generatedCardsArray.forEach(function(el) {
+const startingCardsArray = Array.from(elements.children);
+startingCardsArray.forEach(function(el) {
   el.querySelector('.element__trash').addEventListener('click', function() {
-    console.log('good')
-    el.remove()
+    el.remove();
   })
 })
 
