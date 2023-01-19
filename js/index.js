@@ -84,11 +84,10 @@ function addNewCard () {
     evt.target.parentElement.remove()
   })
   newCard.querySelector('.element__image').addEventListener('click', function () {
+    imagePopUp.querySelector('.image-popup__image').setAttribute('src', `${newCard.querySelector('.element__image').getAttribute('src')}`);
+    imagePopUp.querySelector('.image-popup__title').textContent = `${newCard.querySelector('.element__title').textContent}`;
     imagePopUp.classList.add('popup_opened')
   })
-  newCard.querySelector('.element__image').addEventListener('click', function() {
-    imagePopUp.querySelector('.image-popup__image').setAttribute('src', `${newCard.querySelector('.element__image').getAttribute('src')}`)
-    })
 }
 
 function openEditPopup () {
@@ -136,16 +135,14 @@ closeImageIcon.addEventListener('click', function () {
   imagePopUp.classList.remove('popup_opened')
 })
 
-
-// Добавляю возможность удаления созданных вручную карточек
-// Добавляю возможность просмотра созданных вручную карточек
 const allCardsArray = Array.from(elements.children);
 allCardsArray.forEach(function(el) {
   el.querySelector('.element__trash').addEventListener('click', function() {
     el.remove();
   })
   el.querySelector('.element__image').addEventListener('click', function() {
-    imagePopUp.querySelector('.image-popup__image').setAttribute('src', `${el.querySelector('.element__image').getAttribute('src')}`)
+    imagePopUp.querySelector('.image-popup__image').setAttribute('src', `${el.querySelector('.element__image').getAttribute('src')}`);
+    imagePopUp.querySelector('.image-popup__title').textContent = `${el.querySelector('.element__title').textContent}`;
     imagePopUp.classList.add('popup_opened');
   })
 })
