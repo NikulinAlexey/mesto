@@ -1,58 +1,31 @@
-let editButton = document.querySelector('.profile__edit-button');
-let addButton = document.querySelector('.profile__add-button');
+const editButton = document.querySelector('.profile__edit-button');
+const addButton = document.querySelector('.profile__add-button');
 
-let editPopUp = document.querySelector('.popup');
-let addPopUp = document.querySelector('.add-popup');
-let imagePopUp = document.querySelector('.image-popup');
+const editPopUp = document.querySelector('.popup');
+const addPopUp = document.querySelector('.add-popup');
+const imagePopUp = document.querySelector('.image-popup');
 
-let closeEditIcon = document.querySelector('.popup__close-icon');
-let closeAddIcon = document.querySelector('.add-popup__close-icon')
-let closeImageIcon = document.querySelector('.image-popup__close-icon')
+const closeEditIcon = document.querySelector('.popup__close-icon');
+const closeAddIcon = document.querySelector('.add-popup__close-icon')
+const closeImageIcon = document.querySelector('.image-popup__close-icon')
 
-let nameInput = document.querySelector('.popup__input_type_name');
-let jobInput = document.querySelector('.popup__input_type_job');
-let placeInput = document.querySelector('.add-popup__input_type_place');
-let linkInput = document.querySelector('.add-popup__input_type_link');
+const nameInput = document.querySelector('.popup__input_type_name');
+const jobInput = document.querySelector('.popup__input_type_job');
+const placeInput = document.querySelector('.add-popup__input_type_place');
+const linkInput = document.querySelector('.add-popup__input_type_link');
 
-let nameProfile = document.querySelector('.profile__name');
-let jobProfile = document.querySelector('.profile__job');
-let formElement = document.querySelector('.popup__form');
-let addFormElement = document.querySelector('.add-popup__form');
+const nameProfile = document.querySelector('.profile__name');
+const jobProfile = document.querySelector('.profile__job');
+const formElement = document.querySelector('.popup__form');
+const addFormElement = document.querySelector('.add-popup__form');
 
-let elements = document.querySelector('.elements');
-let cardItems = document.querySelectorAll('.element');
-let elementsImage = document.querySelectorAll('.element__image');
-let elementsTitle = document.querySelectorAll('.element__title');
+const elements = document.querySelector('.elements');
+const cardItems = document.querySelectorAll('.element');
+const elementsImage = document.querySelectorAll('.element__image');
+const elementsTitle = document.querySelectorAll('.element__title');
 
 const likeButton = document.querySelectorAll('.element__like');
 const cardTemplate = document.querySelector('#elementTemplate').content;
-const initialCards = [
-  {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  }
-]; 
-
 
 
 function createStartingCards () {
