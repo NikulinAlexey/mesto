@@ -3,9 +3,11 @@ let addButton = document.querySelector('.profile__add-button');
 
 let editPopUp = document.querySelector('.popup');
 let addPopUp = document.querySelector('.add-popup');
+let imagePopUp = document.querySelector('.image-popup');
 
 let closeEditIcon = document.querySelector('.popup__close-icon');
 let closeAddIcon = document.querySelector('.add-popup__close-icon')
+let closeImageIcon = document.querySelector('.image-popup__close-icon')
 
 let nameInput = document.querySelector('.popup__input_type_name');
 let jobInput = document.querySelector('.popup__input_type_job');
@@ -21,8 +23,6 @@ let elements = document.querySelector('.elements');
 let cardItems = document.querySelectorAll('.element');
 let elementsImage = document.querySelectorAll('.element__image');
 let elementsTitle = document.querySelectorAll('.element__title');
-
-
 
 const likeButton = document.querySelectorAll('.element__like');
 let addedCards = [];
@@ -55,7 +55,8 @@ const initialCards = [
 ];
 
 
-function creatStartingCards () {
+
+function createStartingCards () {
   initialCards.forEach(function(el,index) {
     let newCard = cardTemplate.querySelector('.element').cloneNode(true);
     newCard.querySelector('.element__title').textContent = `${initialCards[index].name}`;
@@ -69,7 +70,7 @@ function creatStartingCards () {
     elements.append(newCard);
   })
 }
-creatStartingCards();
+createStartingCards();
 
 function addNewCard () {
   let newCard = cardTemplate.querySelector('.element').cloneNode(true);
@@ -83,9 +84,10 @@ function addNewCard () {
   newCard.querySelector('.element__trash').addEventListener('click', function(evt) {
     evt.target.parentElement.remove()
   })
+  newCard.querySelector('.element__image').addEventListener('click', function () {
+    imagePopUp.classList.add('popup_opened')
+  })
 }
-
-
 
 function openEditPopup () {
   editPopUp.classList.add('popup_opened');
@@ -128,11 +130,20 @@ addButton.addEventListener('click', openAddPopup);
 
 closeEditIcon.addEventListener('click', closeEditPopup);
 closeAddIcon.addEventListener('click', closeAddPopup);
+closeImageIcon.addEventListener('click', function () {
+  imagePopUp.classList.remove('popup_opened')
+})
 
 const startingCardsArray = Array.from(elements.children);
 startingCardsArray.forEach(function(el) {
   el.querySelector('.element__trash').addEventListener('click', function() {
     el.remove();
+  })
+})
+
+startingCardsArray.forEach(function(el) {
+  el.querySelector('.element__image').addEventListener('click', function() {
+    imagePopUp.classList.add('popup_opened')
   })
 })
 
