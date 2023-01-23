@@ -1,23 +1,24 @@
 const buttonEdit = document.querySelector('.profile__edit-button');
 const buttonAdd = document.querySelector('.profile__add-button');
 
-const popupEdit = document.querySelector('.popup');
-const popupAdd = document.querySelector('.add-popup');
-const popupImage = document.querySelector('.image-popup');
+const popupEdit = document.querySelector('.popup_type_edit');
+const popupAdd = document.querySelector('.popup_type_add');
+const popupImage = document.querySelector('.popup_type_image');
 
-const buttonClosePopupEdit = document.querySelector('.popup__close-icon');
-const buttonClosePopupAdd = document.querySelector('.add-popup__close-icon')
-const buttonClosePopupImage = document.querySelector('.image-popup__close-icon')
+const buttonClosePopupEdit = document.querySelector('.popup__close-icon_type_edit');
+const buttonClosePopupAdd = document.querySelector('.popup__close-icon_type_add');
+const buttonClosePopupImage = document.querySelector('.popup__close-icon_type_image');
 
 const nameInput = document.querySelector('.popup__input_type_name');
 const jobInput = document.querySelector('.popup__input_type_job');
-const placeInput = document.querySelector('.add-popup__input_type_place');
-const linkInput = document.querySelector('.add-popup__input_type_link');
+const placeInput = document.querySelector('.popup__input_type_place');
+const linkInput = document.querySelector('.popup__input_type_link');
 
 const nameProfile = document.querySelector('.profile__name');
 const jobProfile = document.querySelector('.profile__job');
-const formElement = document.querySelector('.popup__form');
-const formAddElement = document.querySelector('.add-popup__form');
+
+const formElement = document.querySelector('.popup__form_type_edit');
+const formAddElement = document.querySelector('.popup__form_type_add');
 
 const elements = document.querySelector('.elements');
 const cardItems = document.querySelectorAll('.element');
@@ -83,7 +84,6 @@ function handleAddFormSubmit (evt) {
   addNewCard();
   closePopup(popupAdd);
 }
-
 
 
 formElement.addEventListener('submit', handleFormSubmit);
