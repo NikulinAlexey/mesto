@@ -10,7 +10,7 @@ const buttonImage = document.querySelector('.image-popup__image');
 
 const popupEdit = document.querySelector('.popup_type_edit');
 const popupAdd = document.querySelector('.popup_type_add');
-const popupImage = document.querySelector('.popup_type_image');
+const popupImage = document.querySelector('.image-popup_type_image');
 
 const nameInput = document.querySelector('.popup__input_type_name');
 const jobInput = document.querySelector('.popup__input_type_job');
