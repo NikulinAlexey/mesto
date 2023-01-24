@@ -3,7 +3,7 @@ const buttonAdd = document.querySelector('.profile__add-button');
 
 const buttonClosePopupEdit = document.querySelector('.popup__close-icon_type_edit');
 const buttonClosePopupAdd = document.querySelector('.popup__close-icon_type_add');
-const buttonClosePopupImage = document.querySelector('.popup__close-icon_type_image');
+const buttonClosePopupImage = document.querySelector('.image-popup__close-icon_type_image');
 
 const buttonLike = document.querySelector('.element__like');
 const buttonImage = document.querySelector('.image-popup__image');
