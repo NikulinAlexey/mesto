@@ -27,6 +27,12 @@ const elements = document.querySelector('.elements');
 const cardTemplate = document.querySelector('#elementTemplate').content;
 
 
+function openPopupImage(name, link) {
+  buttonImage.setAttribute('src', `${link}`);
+  buttonImage.setAttribute('alt', `${name}`);
+  popupImage.querySelector('.image-popup__title').textContent = `${name}`;
+  openPopup(popupImage)
+}
 function createNewCard (name, link) {
   const newCard = cardTemplate.querySelector('.element').cloneNode(true);
   
@@ -40,11 +46,7 @@ function createNewCard (name, link) {
   newCard.querySelector('.element__trash').addEventListener('click', function(evt) {
     evt.target.parentElement.remove()
   })
-  newCard.querySelector('.element__image').addEventListener('click', function () {
-    buttonImage.setAttribute('src', `${newCard.querySelector('.element__image').getAttribute('src')}`);
-    popupImage.querySelector('.image-popup__title').textContent = `${newCard.querySelector('.element__title').textContent}`;
-    openPopup(popupImage)
-  })
+  newCard.querySelector('.element__image').addEventListener('click', () => openPopupImage(name, link))
   
   return newCard;
 }
