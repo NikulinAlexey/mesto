@@ -8,33 +8,33 @@ const enableValidationConfig = {
   errorClass: 'popup__error_visible'
 }; 
 const formList = Array.from(document.querySelectorAll(enableValidationConfig.formSelector));
+const inputList = Array.from(document.querySelectorAll(enableValidationConfig.inputSelector));
 
-const setInputListeners = (config) => {
-  const inputList = Array.from(document.querySelectorAll(config.inputSelector));
-
-  inputList.forEach(function(inputElement) {
-    inputElement.addEventListener('input', function() {
-    });
-  });
-}
-
-const handleFromInput = (event, config) => {
+const checkInputValidity = (event, inputElement,config) => {
   const input = event.target;
 
-  if (input.validity.valid) {
-    input.classList.remove(config.errorClass)
+  if (inputElement.validity.valid) {
+    input.classList.remove(config.inputErrorClass)
   }else{
-    input.classList.add(config.errorClass)
+    input.classList.add(config.inputErrorClass)
   }
+}
+
+const setInputListeners = () => {
+  inputList.forEach(function(inputElement) {
+    inputElement.addEventListener('input', function(event) {
+      checkInputValidity(event, inputElement,enableValidationConfig)
+    });
+  });
 }
 
 const disableSubmit = () => {
   formList.forEach((formElement) => {
     formElement.addEventListener('submit', function(event) {
-      handleFromInput(event, config)
+      event.preventDefault()
     });
   });
 };
 
 disableSubmit();
-setInputListeners(enableValidationConfig)
+setInputListeners();

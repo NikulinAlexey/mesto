@@ -18,9 +18,9 @@
 
 .popup__input:focus {
   box-shadow: 0 0 8px #709CF1;
-  outline-color: #709CF1;
+  outline-color: rgba(0, 0, 0, .2);
   outline-style: solid;
-  outline-width: 2px;
+  outline-width: 1px;
   border-radius: 2px;
 }
 
