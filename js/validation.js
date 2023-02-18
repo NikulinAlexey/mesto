@@ -10,20 +10,32 @@ const enableValidationConfig = {
 const formList = Array.from(document.querySelectorAll(enableValidationConfig.formSelector));
 const inputList = Array.from(document.querySelectorAll(enableValidationConfig.inputSelector));
 
-const checkInputValidity = (event, inputElement,config) => {
-  const input = event.target;
+const showInputError = () => {
+  
+}
 
+const hideInputError = () => {
+  
+}
+
+const handleFormInput = (event, inputElement,config) => {
+  const input = event.target;
+  const errorElement = document.querySelector(`#${input.id}-error`);
+  
+  
   if (inputElement.validity.valid) {
-    input.classList.remove(config.inputErrorClass)
+    input.classList.remove(config.inputErrorClass);
+    errorElement.textContent = '';
   }else{
-    input.classList.add(config.inputErrorClass)
+    input.classList.add(config.inputErrorClass);
+    errorElement.textContent = input.validationMessage;
   }
 }
 
 const setInputListeners = () => {
   inputList.forEach(function(inputElement) {
     inputElement.addEventListener('input', function(event) {
-      checkInputValidity(event, inputElement,enableValidationConfig)
+      handleFormInput(event, inputElement,enableValidationConfig)
     });
   });
 }
@@ -35,6 +47,8 @@ const disableSubmit = () => {
     });
   });
 };
+
+
 
 disableSubmit();
 setInputListeners();
