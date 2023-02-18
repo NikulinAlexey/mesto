@@ -37,7 +37,7 @@ const toggleButtonState = (formElement, config) => {
 const setInputListeners = (config) => {
   inputList.forEach(function(inputElement) {
     inputElement.addEventListener('input', function(event) {
-      handleFormInput(event, inputElement,config)
+      handleFormInput(event, inputElement,config);
     });
   });
 }

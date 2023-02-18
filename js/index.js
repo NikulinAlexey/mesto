@@ -27,6 +27,7 @@ const elements = document.querySelector('.elements');
 const cardTemplate = document.querySelector('#elementTemplate').content;
 const popupList = Array.from(document.querySelectorAll('.popup'));
 
+
 popupList.push(document.querySelector('.image-popup'));
 
 function openPopupImage(name, link) {
@@ -65,12 +66,6 @@ function closePopup (popup) {
   popup.classList.remove('popup_opened');
 }
 
-function closePopupListener (evt) {
-  if (evt.key === 'Escape') {
-    closePopup(popup)
-  }
-}
-
 function handleFormSubmit (evt) {
   evt.preventDefault(); 
     
@@ -87,6 +82,7 @@ function handleAddFormSubmit (evt) {
 }
 
 
+
 formElement.addEventListener('submit', handleFormSubmit);
 formAddElement.addEventListener('submit', handleAddFormSubmit);
 
@@ -101,6 +97,7 @@ buttonAdd.addEventListener('click', function () {
   openPopup(popupAdd);
 });
 
+
 buttonClosePopupEdit.addEventListener('click', function () {
   closePopup(popupEdit);
 });
@@ -111,14 +108,33 @@ buttonClosePopupImage.addEventListener('click',  function () {
   closePopup(popupImage);
 });
 
+
+popupEdit.addEventListener('click', function (evt) {
+  if (evt.target.classList.contains('popup_type_edit')) {
+    closePopup(popupEdit)
+  }
+});
+
+popupAdd.addEventListener('click', function (evt) {
+  if (evt.target.classList.contains('popup_type_add')) {
+    closePopup(popupAdd)
+  }
+});
+
+popupImage.addEventListener('click', function (evt) {
+  if (evt.target.classList.contains('image-popup_type_image')) {
+    closePopup(popupImage)
+  }
+});
+
 popupList.forEach(function(popup) {
   document.addEventListener('keydown', function(evt) {
     if (evt.key === 'Escape') {
       closePopup(popup);
-      console.log('working')
     }
-  });
-  слушатель на клик вне popup
-});
+  })
+})
+
+
 
 createStartingCards(initialCards);
