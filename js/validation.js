@@ -2,26 +2,19 @@
 const enableValidationConfig = {
   formSelector: '.popup__form',
   inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__button',
-  inactiveButtonClass: 'popup__button_disabled',
+  submitButtonSelector: '.popup__submit',
+  inactiveButtonClass: 'popup__submit_type_inactive',
   inputErrorClass: 'popup__input_type_error',
   errorClass: 'popup__error_visible'
 }; 
 const formList = Array.from(document.querySelectorAll(enableValidationConfig.formSelector));
 const inputList = Array.from(document.querySelectorAll(enableValidationConfig.inputSelector));
 
-const showInputError = () => {
-  
-}
 
-const hideInputError = () => {
-  
-}
 
 const handleFormInput = (event, inputElement,config) => {
   const input = event.target;
   const errorElement = document.querySelector(`#${input.id}-error`);
-  
   
   if (inputElement.validity.valid) {
     input.classList.remove(config.inputErrorClass);
@@ -32,23 +25,43 @@ const handleFormInput = (event, inputElement,config) => {
   }
 }
 
-const setInputListeners = () => {
+const toggleButtonState = (formElement, config) => {
+  const buttonElement = formElement.querySelector(config.submitButtonSelector);
+  const isFormValid =  formElement.checkValidity();
+
+
+  buttonElement.disabled = !isFormValid;
+  buttonElement.classList.toggle(config.inactiveButtonClass, !isFormValid)
+
+  console.log(isFormValid);
+  console.log(buttonElement);
+}
+
+const setInputListeners = (config) => {
   inputList.forEach(function(inputElement) {
     inputElement.addEventListener('input', function(event) {
-      handleFormInput(event, inputElement,enableValidationConfig)
+      handleFormInput(event, inputElement,config)
     });
   });
 }
 
-const disableSubmit = () => {
+const enableValidation = (config) => {
   formList.forEach((formElement) => {
     formElement.addEventListener('submit', function(event) {
-      event.preventDefault()
+      event.preventDefault();
     });
+    formElement.addEventListener('input', function() {
+      toggleButtonState(formElement, config)
+    })
+    toggleButtonState(formElement, config);
+    setInputListeners(config);
   });
+  
+    
 };
 
 
 
-disableSubmit();
-setInputListeners();
+enableValidation(enableValidationConfig);
+
+
