@@ -4,7 +4,7 @@
   font-weight: 400;
   font-size: 14px;
   line-height: 17px;
-  margin: 0 auto 30px auto;
+  margin: 0 auto;
   width: 84%;
   padding: 0;
   border: none;
@@ -17,11 +17,8 @@
 }
 
 .popup__input:focus {
-  box-shadow: 0 0 8px #709CF1;
-  outline-color: rgba(0, 0, 0, .2);
-  outline-style: solid;
-  outline-width: 1px;
-  border-radius: 2px;
+  outline: none;
+  
 }
 
 @media screen and (max-width: 680px) {
