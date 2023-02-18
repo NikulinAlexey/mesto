@@ -25,7 +25,9 @@ const formAddElement = document.querySelector('.popup__form_type_add');
 
 const elements = document.querySelector('.elements');
 const cardTemplate = document.querySelector('#elementTemplate').content;
+const popupList = Array.from(document.querySelectorAll('.popup'));
 
+popupList.push(document.querySelector('.image-popup'));
 
 function openPopupImage(name, link) {
   buttonImage.setAttribute('src', `${link}`);
@@ -61,6 +63,12 @@ function openPopup (popup) {
 }
 function closePopup (popup) {
   popup.classList.remove('popup_opened');
+}
+
+function closePopupListener (evt) {
+  if (evt.key === 'Escape') {
+    closePopup(popup)
+  }
 }
 
 function handleFormSubmit (evt) {
@@ -103,5 +111,14 @@ buttonClosePopupImage.addEventListener('click',  function () {
   closePopup(popupImage);
 });
 
+popupList.forEach(function(popup) {
+  document.addEventListener('keydown', function(evt) {
+    if (evt.key === 'Escape') {
+      closePopup(popup);
+      console.log('working')
+    }
+  });
+  слушатель на клик вне popup
+});
 
 createStartingCards(initialCards);

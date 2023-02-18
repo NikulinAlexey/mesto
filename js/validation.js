@@ -32,9 +32,6 @@ const toggleButtonState = (formElement, config) => {
 
   buttonElement.disabled = !isFormValid;
   buttonElement.classList.toggle(config.inactiveButtonClass, !isFormValid)
-
-  console.log(isFormValid);
-  console.log(buttonElement);
 }
 
 const setInputListeners = (config) => {
