@@ -10,6 +10,7 @@
   border: none;
   height: 30px;
   border-bottom: 1px solid rgba(0, 0, 0, .2);
+  background-color: #fff;
 }
 
 .popup__input:nth-of-type(2n) {
@@ -18,7 +19,6 @@
 
 .popup__input:focus {
   outline: none;
-  
 }
 
 @media screen and (max-width: 680px) {
