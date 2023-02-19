@@ -3,10 +3,16 @@
   box-sizing: border-box;
   display: grid;
   gap: 17px;
-  grid-template-columns: repeat(auto-fit, minmax(282px, 1fr));
+  grid-template-columns: repeat(auto-fit, 282px);
+  grid-auto-flow: row;
   grid-template-rows: repeat(2, minmax(min-content , max-content));
   padding: 0;
   margin: 0 auto 67px auto;
+}
+
+@media screen and (max-width: 975px) {
+  .elements {
+    grid-template-columns: repeat(auto-fit,282px);
 }
 
 @media screen and (max-width: 320px) {
