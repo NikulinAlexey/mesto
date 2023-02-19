@@ -8,28 +8,36 @@ const validationConfig = {
   errorClass: 'popup__error_visible'
 }; 
 
-const showInputError = () => {}
+const showInputError = (config, input, errorElement) => {
+  input.classList.add(config.inputErrorClass);
+  errorElement.textContent = input.validationMessage;
+}
 
-const hideInputError = () => {}
+const hideInputError = (config, input, errorElement) => {
+  input.classList.remove(config.inputErrorClass);
+  errorElement.textContent = '';
+}
 
 const toggleButtonState = (formElement, config) => {
   const buttonElement = formElement.querySelector(config.submitButtonSelector);
   const isFormValid =  formElement.checkValidity();
 
   buttonElement.disabled = !isFormValid;
-  buttonElement.classList.toggle(config.inactiveButtonClass, !isFormValid);
+  if (buttonElement.disabled) {
+    buttonElement.classList.add(config.inactiveButtonClass);
+  }else{
+    buttonElement.classList.remove(config.inactiveButtonClass);
+  }
 }
 
 const handleFormInput = (event, inputElement,config) => {
   const input = event.target;
   const errorElement = document.querySelector(`#${input.id}-error`);
-  //показать ошибку
+  
   if (inputElement.validity.valid) {
-    input.classList.remove(config.inputErrorClass);
-    errorElement.textContent = '';
-  }else{//убрать ошибку
-    input.classList.add(config.inputErrorClass);
-    errorElement.textContent = input.validationMessage;
+    hideInputError(config, input, errorElement);
+  }else{
+    showInputError(config, input, errorElement);
   }
 }
 
@@ -48,13 +56,23 @@ const enableValidation = (config) => {
   formList.forEach((formElement) => {
     formElement.addEventListener('submit', function(event) {
       event.preventDefault();
+      
+      const buttonElement = formElement.querySelector(config.submitButtonSelector);
+      buttonElement.disabled = true;
+      if (buttonElement.disabled) {
+        buttonElement.classList.add(config.inactiveButtonClass);
+      }else{
+        buttonElement.classList.remove(config.inactiveButtonClass);
+      }
     });
     formElement.addEventListener('input', function() {
-      toggleButtonState(formElement, config)
-    })
+      toggleButtonState(formElement, config);
+    });
+    
     toggleButtonState(formElement, config);
     setInputListeners(config,inputList);
   });
+  
 };
 
 enableValidation(validationConfig);

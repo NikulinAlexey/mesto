@@ -62,7 +62,6 @@ function openPopup (popup) {
   document.addEventListener('keydown', function(evt) {
     if (evt.key === 'Escape') {
       closePopup(popup);
-      console.log('good')
     }
   }, { once: true});
 }
@@ -87,7 +86,7 @@ function handleAddFormSubmit (evt) {
 
 function closePopupByOutsideClick (evt, popup) {
   if (evt.target.classList.contains('popup')) {
-    closePopup(popup)
+    closePopup(popup);
   }
 }
 
