@@ -1,3 +1,6 @@
+import { renderElements } from "./Card.js";
+import { initialCards } from "./initialCards.js";
+
 const buttonEdit = document.querySelector('.profile__edit-button');
 const buttonAdd = document.querySelector('.profile__add-button');
 
@@ -23,8 +26,10 @@ const formAddElement = document.querySelector('.popup__form_type_add');
 const buttonLike = document.querySelector('.element__like');
 const buttonImage = document.querySelector('.image-popup__image');
 
-const elements = document.querySelector('.elements');
+
 const cardTemplate = document.querySelector('#elementTemplate').content;
+
+
 
 function openPopup(popup) {
   popup.classList.add('popup_opened');
@@ -102,3 +107,6 @@ popupAdd.addEventListener('click', function (evt) {
 popupImage.addEventListener('click', function (evt) {
   closePopupByOutsideClick(evt, popupImage);
 });
+
+
+renderElements(initialCards, '#elementTemplate')

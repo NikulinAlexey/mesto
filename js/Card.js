@@ -1,8 +1,8 @@
-import {initialCards} from './data.js';
+const elements = document.querySelector('.elements');
+const buttonImage = document.querySelector('.image-popup__image');
 
-
-class Card {
-  constructor(data, templateSelector) {
+ export class Card {
+  constructor(templateSelector) {
     this._templateSelector = templateSelector;
   }
 
@@ -17,8 +17,8 @@ class Card {
   }
 
   _handleOpenPopup() {
-    popupImage.src = this._image;
-    popupElement.classList.add('popup_opened');
+    buttonImage.setAttribute('src', `${this._image}`);
+    this._element.querySelector('.image-popup_type_image').classList.add('popup_opened');
   }
 
   _handleClosePopup() {
@@ -27,19 +27,18 @@ class Card {
   }
 
   _setEventListeners() {
-    this._image.addEventListener('click', () => {
+    console.log('good');
+    this._element.addEventListener('click', () => {
       this._handleOpenPopup();
     });
 
-    buttonClosePopupImage.addEventListener('click', () => {
+    this._element.addEventListener('click', () => {
       this._handleClosePopup();
     });
-  }
-
- 
+  } 
 }
 
-class CardElement extends Card {
+export class NewCard extends Card {
   constructor (data, templateSelector) {
     super(templateSelector);
     this._name = data.name;
@@ -67,15 +66,17 @@ class CardElement extends Card {
   }
 }
 
-const renderElements = (cardList) => {
-  cardList.forEach((item) => {
-    const cardElement = Card.generateCard();
-    cardList.append(cardElement);
+export const renderElements = (data, templateSelector) => {
+  elements.innerHTML = '';
+  
+  data.forEach((item) => {
+    const card =  new NewCard(item, templateSelector);
+
+    const cardElement = card.generateCard();
+    elements.append(cardElement);
   });
 };
 
-
-renderElements(initialCards);
 
 
 
