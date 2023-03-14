@@ -1,4 +1,19 @@
 
+
+class FormValidator {
+  constructor() {
+    
+  }
+}
+
+
+
+
+
+
+
+//Код из файла валидации:
+
 const validationConfig = {
   formSelector: '.popup__form',
   inputSelector: '.popup__input',
