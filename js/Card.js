@@ -1,5 +1,8 @@
 const elements = document.querySelector('.elements');
 const buttonImage = document.querySelector('.image-popup__image');
+const popupImage = document.querySelector('.image-popup_type_image');
+const buttonClosePopupImage = document.querySelector('.image-popup__close-icon_type_image');
+
 
  export class Card {
   constructor(templateSelector) {
@@ -17,24 +20,40 @@ const buttonImage = document.querySelector('.image-popup__image');
   }
 
   _handleOpenPopup() {
-    buttonImage.setAttribute('src', `${this._image}`);
-    this._element.querySelector('.image-popup_type_image').classList.add('popup_opened');
+    document.addEventListener('keydown', function (evt) {
+      if (evt.key === 'Escape') {
+        popupImage.classList.remove('popup_opened');
+      }
+    }, { once: true });
+    buttonImage.setAttribute('src', `${this._link}`);
+    document.querySelector('.image-popup__title').textContent = `${this._name}`;
+    popupImage.classList.add('popup_opened');
   }
 
   _handleClosePopup() {
-    popupImage.src = '';
-    popupElement.classList.remove('popup_opened');
+    document.querySelector('.image-popup__title').textContent = '';
+    this._element.classList.remove('popup_opened');
   }
 
   _setEventListeners() {
-    console.log('good');
-    this._element.addEventListener('click', () => {
+    const buttonLike = this._element.querySelector('.element__like');
+    const buttonDelete = this._element.querySelector('.element__trash');
+
+    this._element.querySelector('.element__image').addEventListener('click', () => {
       this._handleOpenPopup();
     });
 
-    this._element.addEventListener('click', () => {
+    buttonClosePopupImage.addEventListener('click', () => {
       this._handleClosePopup();
     });
+
+    buttonLike.addEventListener('click', () => {
+      buttonLike.classList.toggle('element__like_active');
+    })
+
+    buttonDelete.addEventListener('click', () => {
+      this._element.remove();
+    })
   } 
 }
 
@@ -56,12 +75,10 @@ export class NewCard extends Card {
   }
 
   _handleOpenPopup() {
-    this._element.querySelector('.image-popup__title').textContent = `${this._name}`;
     super._handleOpenPopup();
   }
 
   _handleClosePopup() {
-    this._element.querySelector('.image-popup__title').textContent = '';
     super._handleClosePopup();
   }
 }

@@ -23,14 +23,6 @@ const jobProfile = document.querySelector('.profile__job');
 const formElement = document.querySelector('.popup__form_type_edit');
 const formAddElement = document.querySelector('.popup__form_type_add');
 
-const buttonLike = document.querySelector('.element__like');
-const buttonImage = document.querySelector('.image-popup__image');
-
-
-const cardTemplate = document.querySelector('#elementTemplate').content;
-
-
-
 function openPopup(popup) {
   popup.classList.add('popup_opened');
   document.addEventListener('keydown', function (evt) {
@@ -42,13 +34,6 @@ function openPopup(popup) {
 
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
-}
-
-function openPopupImage(name, link) {
-  buttonImage.setAttribute('src', `${link}`);
-  buttonImage.setAttribute('alt', `${name}`);
-  popupImage.querySelector('.image-popup__title').textContent = `${name}`;
-  openPopup(popupImage)
 }
 
 function closePopupByOutsideClick(evt, popup) {
