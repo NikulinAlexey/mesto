@@ -2,8 +2,6 @@ import { renderElements } from "./Card.js";
 import { initialCards, validationConfig } from "./data.js";
 import { FormValidator } from "./FormValidator.js";
 
-
-
 const buttonEdit = document.querySelector('.profile__edit-button');
 const buttonAdd = document.querySelector('.profile__add-button');
 
@@ -26,10 +24,7 @@ const jobProfile = document.querySelector('.profile__job');
 const formElement = document.querySelector('.popup__form_type_edit');
 const formAddElement = document.querySelector('.popup__form_type_add');
 
-const elements = document.querySelector('.elements');
-const cardTemplate = document.querySelector('#elementTemplate');
 const formList = Array.from(document.querySelectorAll(validationConfig.formSelector));
-const buttonImage = document.querySelector('.image-popup__image');
 
 function openPopup(popup) {
   popup.classList.add('popup_opened');
@@ -44,31 +39,13 @@ function closePopup(popup) {
   popup.classList.remove('popup_opened');
 }
 
-function openPopupImage(name, link) {
-  buttonImage.setAttribute('src', `${link}`);
-  buttonImage.setAttribute('alt', `${name}`);
-  popupImage.querySelector('.image-popup__title').textContent = `${name}`;
-  openPopup(popupImage)
-}
-
 function createNewCard (name, link) {
-  const newCard = cardTemplate.content.querySelector('.element').cloneNode(true);
-
-  const newCardImage = newCard.querySelector('.element__image');
-
-  newCard.querySelector('.element__title').textContent = `${name}`;
-  newCardImage.setAttribute('src', `${link}`);
-  newCardImage.setAttribute('alt', `${name}`);
-
-  newCard.querySelector('.element__like').addEventListener('click', function (evt) {
-    evt.target.classList.toggle('element__like_active');
-  });
-  newCard.querySelector('.element__trash').addEventListener('click', function(evt) {
-    evt.target.parentElement.remove()
+  initialCards.push({
+    name: `${name}`,
+    link: `${link}`
   })
-  newCardImage.addEventListener('click', () => openPopupImage(name, link))
-
-  return newCard;
+  
+  renderElements(initialCards, '#elementTemplate');
 }
 
 function closePopupByOutsideClick(evt, popup) {
@@ -89,7 +66,7 @@ function submitEditProfileForm(evt) {
 function handleAddFormSubmit(evt) {
   evt.preventDefault();
 
-  elements.prepend(createNewCard(placeInput.value, linkInput.value));
+  createNewCard(placeInput.value, linkInput.value);
   closePopup(popupAdd);
 }
 
