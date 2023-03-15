@@ -40,7 +40,7 @@ function closePopup(popup) {
 }
 
 function createNewCard (name, link) {
-  initialCards.push({
+  initialCards.unshift({
     name: `${name}`,
     link: `${link}`
   })

@@ -90,7 +90,7 @@ export const renderElements = (data, templateSelector) => {
     const card =  new NewCard(item, templateSelector);
 
     const cardElement = card.generateCard();
-    elements.prepend(cardElement);
+    elements.append(cardElement);
   });
 };
 
