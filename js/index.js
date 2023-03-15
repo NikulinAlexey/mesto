@@ -1,5 +1,8 @@
 import { renderElements } from "./Card.js";
-import { initialCards } from "./initialCards.js";
+import { initialCards, validationConfig } from "./data.js";
+import { FormValidator } from "./FormValidator.js";
+
+
 
 const buttonEdit = document.querySelector('.profile__edit-button');
 const buttonAdd = document.querySelector('.profile__add-button');
@@ -25,6 +28,8 @@ const formAddElement = document.querySelector('.popup__form_type_add');
 
 const elements = document.querySelector('.elements');
 const cardTemplate = document.querySelector('#elementTemplate');
+const formList = Array.from(document.querySelectorAll(validationConfig.formSelector));
+const buttonImage = document.querySelector('.image-popup__image');
 
 function openPopup(popup) {
   popup.classList.add('popup_opened');
@@ -42,6 +47,8 @@ function closePopup(popup) {
 function openPopupImage(name, link) {
   buttonImage.setAttribute('src', `${link}`);
   buttonImage.setAttribute('alt', `${name}`);
+  popupImage.querySelector('.image-popup__title').textContent = `${name}`;
+  openPopup(popupImage)
 }
 
 function createNewCard (name, link) {
@@ -121,5 +128,12 @@ popupImage.addEventListener('click', function (evt) {
   closePopupByOutsideClick(evt, popupImage);
 });
 
+formList.forEach( (formElement) => {
+  const formValidator = new FormValidator(validationConfig, formElement);
+  
+  formValidator.enableValidation(validationConfig);
+});
 
-renderElements(initialCards, '#elementTemplate')
+renderElements(initialCards, '#elementTemplate');
+
+
