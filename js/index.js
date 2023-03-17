@@ -48,12 +48,16 @@ function handleCardClick(name, link) {
   openPopup(popupImage);
 }
 
-function createNewCard(name, link) {
+function createNewCardInfo(name, link) {
   const newCardData = {
     name: `${name}`,
     link: `${link}`
   }
-  const card =  new Card(newCardData, '#elementTemplate', handleCardClick);
+  return newCardData;
+}
+
+function createCard(item) {
+  const card = new Card(item, '#elementTemplate', handleCardClick);
   const cardElement = card.generateCard();
 
   return cardElement;
@@ -78,16 +82,16 @@ function handleAddFormSubmit(evt) {
   evt.preventDefault();
 
   
-  elements.prepend(createNewCard(placeInput.value, linkInput.value));
+  elements.prepend(createCard(createNewCardInfo(placeInput.value, linkInput.value)));
   closePopup(popupAdd);
 }
 
-function renderElements (data, templateSelector) {
-  data.forEach((item) => {
-    const card =  new Card(item, templateSelector, handleCardClick);
 
-    const cardElement = card.generateCard();
-    elements.append(cardElement);
+function renderElements (data) {
+  elements.innerHTML = '';
+
+  data.forEach((item) => {
+    elements.append(createCard(item));
   });
 };
 
