@@ -1,12 +1,9 @@
-const elements = document.querySelector('.elements');
-const buttonImage = document.querySelector('.image-popup__image');
-const popupImage = document.querySelector('.image-popup_type_image');
-const buttonClosePopupImage = document.querySelector('.image-popup__close-icon_type_image');
-
-
- export class Card {
-  constructor(templateSelector) {
+export class Card {
+  constructor(data, templateSelector, handleCardClick) {
     this._templateSelector = templateSelector;
+    this._name = data.name;
+    this._link = data.link;
+    this._handleCardClick = handleCardClick;
   }
 
   _getTemplate() {
@@ -16,85 +13,40 @@ const buttonClosePopupImage = document.querySelector('.image-popup__close-icon_t
       .querySelector('.element')
       .cloneNode(true);
 
+    this._image = cardElement.querySelector('.element__image');
+    this._buttonLike = cardElement.querySelector('.element__like');
+    this._buttonDelete = cardElement.querySelector('.element__trash');
+
     return cardElement;
   }
 
-  _handleOpenPopup() {
-    document.addEventListener('keydown', function (evt) {
-      if (evt.key === 'Escape') {
-        popupImage.classList.remove('popup_opened');
-      }
-    }, { once: true });
-    buttonImage.setAttribute('src', `${this._link}`);
-    document.querySelector('.image-popup__title').textContent = `${this._name}`;
-    popupImage.classList.add('popup_opened');
+  _toggleLike () {
+    this._buttonLike.classList.toggle('element__like_active');
+  }
+  _deleteCard () {
+    this._element.remove();
   }
 
-  _handleClosePopup() {
-    document.querySelector('.image-popup__title').textContent = '';
-    this._element.classList.remove('popup_opened');
-  }
-
-  _setEventListeners() {
-    const buttonLike = this._element.querySelector('.element__like');
-    const buttonDelete = this._element.querySelector('.element__trash');
-
-    this._element.querySelector('.element__image').addEventListener('click', () => {
-      this._handleOpenPopup();
-    });
-
-    buttonClosePopupImage.addEventListener('click', () => {
-      this._handleClosePopup();
-    });
-
-    buttonLike.addEventListener('click', () => {
-      buttonLike.classList.toggle('element__like_active');
+  _setEventListeners () {
+    this._buttonLike.addEventListener('click', () => {
+      this._toggleLike()
     })
-
-    buttonDelete.addEventListener('click', () => {
-      this._element.remove();
+    this._buttonDelete.addEventListener('click', () => {
+      this._deleteCard()
     })
-  } 
-}
-
-export class NewCard extends Card {
-  constructor (data, templateSelector) {
-    super(templateSelector);
-    this._name = data.name;
-    this._link = data.link;
+    this._image.addEventListener('click', () => {
+      this._handleCardClick(this._name, this._link)
+    });
   }
 
   generateCard() {
-    this._element = super._getTemplate();
-    super._setEventListeners();
+    this._element = this._getTemplate();
+    this._setEventListeners();
 
-    this._element.querySelector('.element__image').setAttribute('src', `${this._link}`);
+    this._image.setAttribute('src', `${this._link}`);
+    this._image.setAttribute('alt', `${this.name}`);
     this._element.querySelector('.element__title').textContent = `${this._name}`;
 
     return this._element;
   }
-
-  _handleOpenPopup() {
-    super._handleOpenPopup();
-  }
-
-  _handleClosePopup() {
-    super._handleClosePopup();
-  }
 }
-
-export const renderElements = (data, templateSelector) => {
-  elements.innerHTML = '';
-  
-  data.forEach((item) => {
-    const card =  new NewCard(item, templateSelector);
-
-    const cardElement = card.generateCard();
-    elements.append(cardElement);
-  });
-};
-
-
-
-
-

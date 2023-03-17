@@ -1,4 +1,4 @@
-import { renderElements } from "./Card.js";
+import { Card } from "./Card.js"
 import { initialCards, validationConfig } from "./data.js";
 import { FormValidator } from "./FormValidator.js";
 
@@ -25,6 +25,9 @@ const formElement = document.querySelector('.popup__form_type_edit');
 const formAddElement = document.querySelector('.popup__form_type_add');
 
 const formList = Array.from(document.querySelectorAll(validationConfig.formSelector));
+const elements = document.querySelector('.elements');
+const buttonImage = document.querySelector('.image-popup__image');
+const imageTitle = document.querySelector('.image-popup__title');
 
 function openPopup(popup) {
   popup.classList.add('popup_opened');
@@ -39,13 +42,21 @@ function closePopup(popup) {
   popup.classList.remove('popup_opened');
 }
 
-function createNewCard (name, link) {
-  initialCards.unshift({
+function handleCardClick(name, link) {
+  buttonImage.setAttribute('src', `${link}`)
+  imageTitle.textContent = `${name}`;
+  openPopup(popupImage);
+}
+
+function createNewCard(name, link) {
+  const newCardData = {
     name: `${name}`,
     link: `${link}`
-  })
-  
-  renderElements(initialCards, '#elementTemplate');
+  }
+  const card =  new Card(newCardData, '#elementTemplate', handleCardClick);
+  const cardElement = card.generateCard();
+
+  return cardElement;
 }
 
 function closePopupByOutsideClick(evt, popup) {
@@ -66,9 +77,19 @@ function submitEditProfileForm(evt) {
 function handleAddFormSubmit(evt) {
   evt.preventDefault();
 
-  createNewCard(placeInput.value, linkInput.value);
+  
+  elements.prepend(createNewCard(placeInput.value, linkInput.value));
   closePopup(popupAdd);
 }
+
+function renderElements (data, templateSelector) {
+  data.forEach((item) => {
+    const card =  new Card(item, templateSelector, handleCardClick);
+
+    const cardElement = card.generateCard();
+    elements.append(cardElement);
+  });
+};
 
 formElement.addEventListener('submit', submitEditProfileForm);
 formAddElement.addEventListener('submit', handleAddFormSubmit);
@@ -108,7 +129,7 @@ popupImage.addEventListener('click', function (evt) {
 formList.forEach( (formElement) => {
   const formValidator = new FormValidator(validationConfig, formElement);
   
-  formValidator.enableValidation(validationConfig);
+  formValidator.enableValidation();
 });
 
 renderElements(initialCards, '#elementTemplate');
