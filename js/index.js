@@ -5,10 +5,6 @@ import { FormValidator } from "./FormValidator.js";
 const buttonEdit = document.querySelector('.profile__edit-button');
 const buttonAdd = document.querySelector('.profile__add-button');
 
-const buttonClosePopupEdit = document.querySelector('.popup__close-icon_type_edit');
-const buttonClosePopupAdd = document.querySelector('.popup__close-icon_type_add');
-const buttonClosePopupImage = document.querySelector('.image-popup__close-icon_type_image');
-
 const popupEdit = document.querySelector('.popup_type_edit');
 const popupAdd = document.querySelector('.popup_type_add');
 const popupImage = document.querySelector('.image-popup_type_image');
@@ -29,17 +25,23 @@ const elements = document.querySelector('.elements');
 const buttonImage = document.querySelector('.image-popup__image');
 const imageTitle = document.querySelector('.image-popup__title');
 
+const popups = document.querySelectorAll('.popup')
+
+function closeByEscape (evt) {
+  if(evt.key === 'Escape') {
+    const openedPopup = document.querySelector('.popup__opened');
+    closePopup(openedPopup);
+  }
+}
+
 function openPopup(popup) {
   popup.classList.add('popup_opened');
-  document.addEventListener('keydown', function (evt) {
-    if (evt.key === 'Escape') {
-      closePopup(popup);
-    }
-  }, { once: true });
+  document.addEventListener('keydown', closeByEscape);
 }
 
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
+  document.removeEventListener('keydown', closeByEscape);
 }
 
 function handleCardClick(name, link) {
@@ -61,12 +63,6 @@ function createCard(item) {
   const cardElement = card.generateCard();
 
   return cardElement;
-}
-
-function closePopupByOutsideClick(evt, popup) {
-  if (evt.target.classList.contains('popup')) {
-    closePopup(popup);
-  }
 }
 
 function submitEditProfileForm(evt) {
@@ -110,25 +106,16 @@ buttonAdd.addEventListener('click', function () {
   
 });
 
-buttonClosePopupEdit.addEventListener('click', function () {
-  closePopup(popupEdit);
-});
-buttonClosePopupAdd.addEventListener('click', function () {
-  closePopup(popupAdd);
-});
-buttonClosePopupImage.addEventListener('click', function () {
-  closePopup(popupImage);
-});
-
-popupEdit.addEventListener('click', function (evt) {
-  closePopupByOutsideClick(evt, popupEdit);
-});
-popupAdd.addEventListener('click', function (evt) {
-  closePopupByOutsideClick(evt, popupAdd);
-});
-popupImage.addEventListener('click', function (evt) {
-  closePopupByOutsideClick(evt, popupImage);
-});
+popups.forEach((popup) => {
+  popup.addEventListener('mousedown', (evt) => {
+      if (evt.target.classList.contains('popup_opened')) {
+          closePopup(popup)
+      }
+      if (evt.target.classList.contains('popup__close-icon')) {
+        closePopup(popup)
+      }
+  })
+})
 
 formList.forEach( (formElement) => {
   const formValidator = new FormValidator(validationConfig, formElement);

@@ -44,14 +44,14 @@ class FormValidator {
     }
   }
   
-  _setInputListeners  ()  {
+  _setInputListeners () {
     this._input.addEventListener('input', (event) => {
       this._handleFormInput();
     });
     
   }
   
-  enableValidation = () => { 
+  enableValidation = () => {
     this._formElement.addEventListener('submit', function (event) {
       event.preventDefault();
       
