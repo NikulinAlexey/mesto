@@ -117,12 +117,12 @@ popups.forEach((popup) => {
   })
 })
 
-formList.forEach( (formElement) => {
+formList.forEach((formElement) => {
   const formValidator = new FormValidator(validationConfig, formElement);
   
   formValidator.enableValidation();
 });
 
-renderElements(initialCards, '#elementTemplate');
+renderElements(initialCards);
 
 
