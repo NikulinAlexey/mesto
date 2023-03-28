@@ -45,7 +45,8 @@ function closePopup(popup) {
 }
 
 function handleCardClick(name, link) {
-  buttonImage.setAttribute('src', `${link}`)
+  buttonImage.setAttribute('src', `${link}`);
+  buttonImage.setAttribute('alt', `${name}`);
   imageTitle.textContent = `${name}`;
   openPopup(popupImage);
 }
