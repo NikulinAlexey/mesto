@@ -1,10 +1,9 @@
 import Card from "../components/Card.js"
-import Popup from "../components/Popup.js";
 import FormValidator from "../components/FormValidator.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import PopupWithImage from "../components/PopupWithImage.js";
+import Section from "../components/Section.js"
 /*
-import Section from "../components/Section.js";
 import UserInfo from "../components/UserInfo.js";
 */
 import {
@@ -22,16 +21,12 @@ import {
   elements,
   placeInput,
   linkInput,
-  buttonImage,
-  imageTitle,
-  popupList,
+  cardContainerSelector,
 } from "../utils/constants.js";
 
-function handleCardClick(name, link) {
+function handleCardClick() {
   const popupWithImage = new PopupWithImage('.image-popup_type_image');
-  buttonImage.setAttribute('src', `${link}`);
-  buttonImage.setAttribute('alt', `${name}`);
-  imageTitle.textContent = `${name}`;
+  
   
   popupWithImage.setEventListeners();
   popupWithImage.open();
@@ -66,11 +61,19 @@ function handleAddFormSubmit(evt) {
   elements.prepend(createCard(createNewCardInfo(placeInput.value, linkInput.value)));
   popupWithForm.close();
 }
-function renderElements (data) {
-  elements.innerHTML = '';
+function renderElements(data) {
+  const section = new Section({
+    data,
+    renderer: (item) => {
+      const card = new Card(item, '.horizontal-card');
+      const cardElement = card.generateCard();
+      data.setItem(cardElement);
+    }
+  },
+    cardContainerSelector);
 
-  data.forEach((item) => {
-    elements.append(createCard(item));
+  data.forEach(() => {
+    section.renderItems()
   });
 };
 

@@ -55,5 +55,6 @@ export const formAddElement = document.querySelector('.popup__form_type_add');
 
 export const formList = Array.from(document.querySelectorAll(validationConfig.formSelector));
 export const elements = document.querySelector('.elements');
+export const cardContainerSelector = '.elements';
 export const buttonImage = document.querySelector('.image-popup__image');
 export const imageTitle = document.querySelector('.image-popup__title');
