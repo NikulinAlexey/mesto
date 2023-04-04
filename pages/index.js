@@ -33,6 +33,9 @@ function handleCardClick(evt) {
   popupWithImage.setEventListeners();
   popupWithImage.open(evt);
 }
+function formSubmit(evt) {
+  evt.preventDefault()
+}
 
 const startingCards = new Section({
   data: initialCards,
@@ -43,20 +46,16 @@ const startingCards = new Section({
   }
 }, cardsContainerSelector);
 
-
-function submitEditProfileForm(evt) {
-  evt.preventDefault();
-
-  const popupEdit = new PopupWithForm('.popup_type_edit');
+function submitEditProfileForm() {
+  const popupEdit = new PopupWithForm('.popup_type_edit', formSubmit);
   const userInfo = new UserInfo({nameSelector: '.profile__name', jobSelector: '.profile__job'})
 
   userInfo.setUserInfo()
+  popupEdit.setEventListeners()
   popupEdit.close();
 }
-function handleAddFormSubmit(evt) {
-  evt.preventDefault();
-  const popupWithForm = new PopupWithForm('.popup_type_add');
-
+function handleAddFormSubmit() {
+  const popupWithForm = new PopupWithForm('.popup_type_add', formSubmit);
   const newCard = new Section({
     data: [
       {
@@ -72,28 +71,30 @@ function handleAddFormSubmit(evt) {
   }, cardsContainerSelector);
 
   newCard.renderItems()
+  popupWithForm.setEventListeners()
   popupWithForm.close();
 }
 
 formElement.addEventListener('submit', submitEditProfileForm);
 formAddElement.addEventListener('submit', handleAddFormSubmit);
+formList.forEach((formElement) => {
+  const formValidator = new FormValidator(validationConfig, formElement);
+
+  formValidator.enableValidation();
+});
 
 buttonEdit.addEventListener('click', () => {
   const firstPopupWithForm = new PopupWithForm('.popup_type_edit');
+
   firstPopupWithForm.setEventListeners();
   firstPopupWithForm.open();
 });
 buttonAdd.addEventListener('click', () => {
   formAddElement.reset()
   const secondPopupWithForm = new PopupWithForm('.popup_type_add');
+
   secondPopupWithForm.setEventListeners();
   secondPopupWithForm.open();
-});
-
-formList.forEach((formElement) => {
-  const formValidator = new FormValidator(validationConfig, formElement);
-  
-  formValidator.enableValidation();
 });
 
 startingCards.renderItems()
