@@ -3,24 +3,28 @@ import FormValidator from "../components/FormValidator.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import Section from "../components/Section.js"
-/*
 import UserInfo from "../components/UserInfo.js";
-*/
+
 import {
   initialCards,
   validationConfig,
+
   buttonAdd,
   buttonEdit,
+
   nameInput,
   jobInput,
+  placeInput,
+  linkInput,
+
   nameProfile,
   jobProfile,
+
   formElement,
   formAddElement,
   formList,
-  placeInput,
-  linkInput,
-  cardContainerSelector,
+
+  cardsContainerSelector,
 } from "../utils/constants.js";
 
 function handleCardClick(evt) {
@@ -37,15 +41,16 @@ const startingCards = new Section({
     const cardElement = card.generateCard();
     startingCards.setItem(cardElement);
   }
-}, cardContainerSelector);
+}, cardsContainerSelector);
+
 
 function submitEditProfileForm(evt) {
-  const popupEdit = new PopupWithForm('.popup_type_edit');
   evt.preventDefault();
 
-  nameProfile.textContent = `${nameInput.value}`;
-  jobProfile.textContent = `${jobInput.value}`;
+  const popupEdit = new PopupWithForm('.popup_type_edit');
+  const userInfo = new UserInfo({nameSelector: '.profile__name', jobSelector: '.profile__job'})
 
+  userInfo.setUserInfo()
   popupEdit.close();
 }
 function handleAddFormSubmit(evt) {
@@ -64,7 +69,7 @@ function handleAddFormSubmit(evt) {
       const cardElement = card.generateCard();
       newCard.setItem(cardElement);
     }
-  }, cardContainerSelector);
+  }, cardsContainerSelector);
 
   newCard.renderItems()
   popupWithForm.close();
