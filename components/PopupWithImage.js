@@ -2,8 +2,6 @@ import Popup from './Popup.js';
 import {
   buttonImage,
   imageTitle,
-  linkInput,
-  placeInput
 } from '../utils/constants.js';
 
 export default class PopupWithImage extends Popup {
@@ -11,12 +9,11 @@ export default class PopupWithImage extends Popup {
     super(popupSelector);
   }
 
-  open() {
+  open(evt) {
     super.open()
-
-    buttonImage.setAttribute('src', `${linkInput.value}`);
-    buttonImage.setAttribute('alt', `${placeInput.value}`);
-    imageTitle.textContent = `${placeInput.value}`;
+    buttonImage.setAttribute('src', `${evt.target.src}`);
+    buttonImage.setAttribute('alt', `${evt.target.closest('.element').querySelector('.element__title').textContent}`);
+    imageTitle.textContent = `${evt.target.closest('.element').querySelector('.element__title').textContent}`;
   }
   setEventListeners() {
     super.setEventListeners();
