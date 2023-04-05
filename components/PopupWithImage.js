@@ -1,21 +1,15 @@
 import Popup from './Popup.js';
-import {
-  buttonImage,
-  imageTitle,
-} from '../utils/constants.js';
 
 export default class PopupWithImage extends Popup {
-  constructor(popupSelector) {
+  constructor(popupSelector, imagePopupImage, ImagePopuptext) {
     super(popupSelector);
+    this._buttonImage = imagePopupImage;
+    this._imageTitle = ImagePopuptext;
   }
-
-  open(evt) {
+  open(cardElementTitle, cardElementImage) {
     super.open()
-    buttonImage.setAttribute('src', `${evt.target.src}`);
-    buttonImage.setAttribute('alt', `${evt.target.closest('.element').querySelector('.element__title').textContent}`);
-    imageTitle.textContent = `${evt.target.closest('.element').querySelector('.element__title').textContent}`;
-  }
-  setEventListeners() {
-    super.setEventListeners();
+    this._buttonImage.setAttribute('src', `${cardElementImage}`);
+    this._buttonImage.setAttribute('alt', `${cardElementTitle}`);
+    this._imageTitle.textContent = `${cardElementTitle}`;
   }
 }

@@ -1,27 +1,27 @@
 export const initialCards = [
   {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+    place: 'Петра, Иордания',
+    link: 'https://putidorogi-nn.ru/images/stories/7_chudes_sveta/sovremennie_sem_chudes_sveta_2.jpg'
   },
   {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+    place: 'Чичен-Ица, Мексика',
+    link: 'https://putidorogi-nn.ru/images/stories/7_chudes_sveta/sovremennie_sem_chudes_sveta_3.jpg'
   },
   {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+    place: 'Статуя Христа-Искупителя, Бразилия',
+    link: 'https://putidorogi-nn.ru/images/stories/7_chudes_sveta/sovremennie_sem_chudes_sveta_4.jpg'
   },
   {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+    place: 'Римский Колизей, Италия',
+    link: 'https://putidorogi-nn.ru/images/stories/7_chudes_sveta/sovremennie_sem_chudes_sveta_5.jpg'
   },
   {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+    place: 'Мачу-Пикчу, Перу',
+    link: 'https://putidorogi-nn.ru/images/stories/7_chudes_sveta/sovremennie_sem_chudes_sveta_7.jpg'
   },
   {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+    place: 'Тадж-Махал, Индия',
+    link: 'https://putidorogi-nn.ru/images/stories/7_chudes_sveta/sovremennie_sem_chudes_sveta_8.jpg'
   }
 ];
 
@@ -35,6 +35,12 @@ export const validationConfig = {
 };
 export const buttonEdit = document.querySelector('.profile__edit-button');
 export const buttonAdd = document.querySelector('.profile__add-button');
+
+export const imagePopupImage = document.querySelector('.image-popup__image');
+export const textPopupImage = document.querySelector('.image-popup__title');
+
+export const cardImage = document.querySelector('.element__image');
+export const cardTitle = document.querySelector('.element__title');
 
 export const popupSelector = '.popup';
 export const popupList = document.querySelectorAll(popupSelector);
@@ -56,5 +62,3 @@ export const formAddElement = document.querySelector('.popup__form_type_add');
 export const formList = Array.from(document.querySelectorAll(validationConfig.formSelector));
 export const elements = document.querySelector('.elements');
 export const cardsContainerSelector = '.elements';
-export const buttonImage = document.querySelector('.image-popup__image');
-export const imageTitle = document.querySelector('.image-popup__title');
