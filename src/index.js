@@ -54,11 +54,9 @@ function createCard(item) {
   const cardElement = card.generateCard();
   return cardElement;
 }
-
 function handleCardClick(cardElementTitle, cardElementImage) {
   popupWithImage.open(cardElementTitle, cardElementImage);
 }
-
 function submitEditProfileForm() {
   userInfo.setUserInfo();
   popupWithFormEdit.close();
@@ -73,8 +71,7 @@ function handleAddFormSubmit(inputValues) {
     }
   }, cardsContainerSelector);
   
-  newCard.renderItems()
-  popupWithFormAdd.setEventListeners()
+  newCard.renderItems();
   popupWithFormAdd.close();
 }
 
@@ -82,7 +79,11 @@ formList.forEach((formElement) => {
   const formValidator = new FormValidator(validationConfig, formElement);
   formValidator.enableValidation();
 });
+
 buttonEdit.addEventListener('click', () => {
+  nameInput.value = userInfo.getUserInfo().name;
+  jobInput.value = userInfo.getUserInfo().job;
+  
   popupWithFormEdit.open();
 });
 buttonAdd.addEventListener('click', () => {
