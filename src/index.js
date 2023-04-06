@@ -1,14 +1,14 @@
-import Card from "../components/Card.js"
-import FormValidator from "../components/FormValidator.js";
-import PopupWithForm from "../components/PopupWithForm.js";
-import PopupWithImage from "../components/PopupWithImage.js";
-import Section from "../components/Section.js"
-import UserInfo from "../components/UserInfo.js";
+import Card from "./components/Card.js"
+import FormValidator from "./components/FormValidator.js";
+import PopupWithForm from "./components/PopupWithForm.js";
+import PopupWithImage from "./components/PopupWithImage.js";
+import Section from "./components/Section.js"
+import UserInfo from "./components/UserInfo.js";
 
 // теперь картинки можно импортировать,
 // вебпак добавит в переменные правильные пути
-const avtar = new URL('../images/avatar.jpg', import.meta.url);
-const logo = new URL('../images/header__logo.svg', import.meta.url);
+const avtar = new URL('./images/avatar.jpg', import.meta.url);
+const logo = new URL('./images/header__logo.svg', import.meta.url);
 
 const whoIsTheGoat = [
   // меняем исходные пути на переменные
@@ -35,7 +35,7 @@ import {
   jobInput,
 
   cardsContainerSelector,
-} from "../utils/constants.js";
+} from "./utils/constants.js";
 
 const popupWithImage = new PopupWithImage('.image-popup_type_image', imagePopupImage, textPopupImage);
 const popupWithFormEdit = new PopupWithForm('.popup_type_edit', submitEditProfileForm, validationConfig);
