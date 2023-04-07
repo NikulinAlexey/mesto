@@ -56,7 +56,7 @@ export const linkInput = document.querySelector('.popup__input_type_link');
 export const nameProfile = document.querySelector('.profile__name');
 export const jobProfile = document.querySelector('.profile__job');
 
-export const formElement = document.querySelector('.popup__form_type_edit');
+export const formEditElement = document.querySelector('.popup__form_type_edit');
 export const formAddElement = document.querySelector('.popup__form_type_add');
 
 export const formList = Array.from(document.querySelectorAll(validationConfig.formSelector));

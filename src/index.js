@@ -27,6 +27,7 @@ import {
 
   formList,
   formAddElement,
+  formEditElement,  
 
   imagePopupImage,
   textPopupImage,
@@ -62,31 +63,42 @@ function submitEditProfileForm() {
   popupWithFormEdit.close();
 }
 function handleAddFormSubmit(inputValues) {
-  const newCard = new Section({
-    data: [
-      inputValues
-    ],
-    renderer: (item) => {
-      newCard.setItem(createCard(item));
-    }
-  }, cardsContainerSelector);
-  
-  newCard.renderItems();
+  const newCard = createCard(inputValues);
+
+  startingCards.setItem(newCard);
   popupWithFormAdd.close();
 }
 
+
+
+
+
+
+
 formList.forEach((formElement) => {
   const formValidator = new FormValidator(validationConfig, formElement);
+ 
   formValidator.enableValidation();
 });
 
+
+
+
+
+
+
 buttonEdit.addEventListener('click', () => {
-  nameInput.value = userInfo.getUserInfo().name;
-  jobInput.value = userInfo.getUserInfo().job;
+  const userData = userInfo.getUserInfo();
+  
+  formEditElement.reset();
+
+  nameInput.value = userData.name;
+  jobInput.value = userData.job;
   
   popupWithFormEdit.open();
 });
 buttonAdd.addEventListener('click', () => {
+  
   formAddElement.reset()
   popupWithFormAdd.open();
 });
