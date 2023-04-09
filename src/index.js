@@ -158,8 +158,6 @@ function handleCardClick(cardElementTitle, cardElementImage) {
 }
 // колбек функция лайков
 function handleLikeClick(evt, data, buttonLike, likeCount) {
-  console.log(data)
-
   if (data.likes.length === 0) {
     // ставлю лайк
     api.addLike(data)
