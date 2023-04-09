@@ -93,7 +93,7 @@ export default class Api {
     }); 
   }
   
-  changeAvatar(input) {
+  changeAvatar(inputValue) {
     return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: 'PATCH',
       headers: {
@@ -101,7 +101,7 @@ export default class Api {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        avatar: `${input.value}`,
+        avatar: `${inputValue}`,
       })
     }); 
   }

@@ -7,7 +7,6 @@ import UserInfo from "./components/UserInfo.js";
 import Api from "./components/Api.js";
 
 import {
-  initialCards,
   validationConfig,
 
   buttonAdd,
@@ -36,6 +35,9 @@ import {
   avatarImage,
 
   cardsContainerSelector,
+  placeInput,
+  linkInput,
+  elements,
 } from "./utils/constants.js";
 
 // импорт картинок Webpack
@@ -57,6 +59,7 @@ const popupWithFormDelete = new PopupWithForm('.popup_type_delete', handleDelete
 const userInfo = new UserInfo({ nameSelector: '.profile__name', jobSelector: '.profile__job' }, nameInput, jobInput);
 const api = new Api({ baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-62', headers: { authorization: '380de586-8df7-40d5-9ea1-f2891fd44b6d', 'Content-Type': 'application/json'}})
 
+
 api.getProfileInfo()
   .then(res => {
     if (res.ok) {
@@ -71,13 +74,6 @@ api.getProfileInfo()
     avatarImage.setAttribute('src', `${res.avatar}`);
   })
 
-formAddElement.addEventListener('submit', () => {
-  renderLoadingCard(true)
-
-  handleAddFormSubmit(inputValues)
-
-  renderLoadingCard(false)
-})
 // функция создания стартовых карточек  
 function makeStartingCards(res) {
   const startingCards = new Section({
@@ -90,6 +86,7 @@ function makeStartingCards(res) {
 }
 
 // получаю с сервера данные карточек
+
 api.getInitialCards()
   .then(res => {
     if (res.ok) {
@@ -109,17 +106,23 @@ function handleDeleteClick(data,cardElement) {
   formDeleteElement.addEventListener('submit', () => {
     //удаляю карточку
     api.deleteCard(data)
-    cardElement.remove();
-    cardElement = null;
-   
-    popupWithFormDelete.close();
+      .then(res => {
+        if (res.ok) {
+
+          return res.json();
+        }
+        return Promise.reject(`Ошибка: ${res.status}`);
+      })
+      .finally(() => {
+        cardElement.remove();
+        popupWithFormDelete.close();
+      })
   })
 }
 // колбек функция открывания попапа с картинкой
 function handleCardClick(cardElementTitle, cardElementImage) {
   popupWithImage.open(cardElementTitle, cardElementImage);
 }
-
 // колбек функция лайков
 function handleLikeClick(data, buttonElement, likeCount) {
   data.likes.forEach((item) => {
@@ -187,7 +190,6 @@ function handleLikeClick(data, buttonElement, likeCount) {
 
   
 }
-
 // функция создания карточки
 function createCard(item) {
   const card = new Card(item, '#elementTemplate', handleCardClick, handleDeleteClick, handleLikeClick);
@@ -234,18 +236,69 @@ function submitEditProfileForm() {
 // сабмит-функция добавления новой карточки
 function handleAddFormSubmit(inputValues) {
   renderLoadingCard(true)
-  popupWithFormAdd.setEventListeners(); 
-  api.addNewCard(inputValues)
-  .then(() => {
-    popupWithFormAdd.close();
-  })
-  .finally(() => {
-    renderLoadingCard(false)
-  })
-  
+  const data = { place: placeInput.value, link: linkInput.value };
+
+
+  api.addNewCard(data)
+    .then(res => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(`Ошибка: ${res.status}`)
+    })
+    .then(() => {
+      elements.innerHTML = '';
+    })
+    .then(() => {
+      api.getInitialCards()
+        .then(res => {
+          if (res.ok) {
+            return res.json();
+          }
+          return Promise.reject(`Ошибка: ${res.status}`);
+        })
+        .then((res) => {
+          // отрисовываю карточки
+          makeStartingCards(res).renderItems();
+        })
+    })
+    .then(() => {
+      renderLoadingCard(false)
+    })
+    .finally(() => {
+      popupWithFormAdd.close()
+    })
 }
+
+
 // сабмит-функция обновления аватарки
-function handleAvatarFormSubmit() {
+function handleAvatarFormSubmit(inputValue) {
+  renderLoadingAvatar(true)
+  
+  api.changeAvatar(avatarInput.value)
+    .then(res => {
+      if (res.ok) {
+        return res.json()
+      }
+      return Promise.reject(`Ошибка: ${res.status}`);
+    })
+    .then(() => {
+      api.getProfileInfo()
+        .then(res => {
+          if (res.ok) {
+            return res.json()
+          }
+          return Promise.reject(`Ошибка: ${res.status}`);
+        })
+        .then((res) => {
+          // вставляю данные в разметку
+          avatarImage.setAttribute('src', `${res.avatar}`);
+        })
+    })
+    .finally(() => {
+      renderLoadingAvatar(false)
+      popupWithFormAvatar.close()
+    })
 }
 // сабмит-функция удаления карточки
 function handleDeleteFormSubmit() {
@@ -270,31 +323,22 @@ buttonEdit.addEventListener('click', () => {
   
   popupWithFormEdit.open();
 });
+
 buttonAdd.addEventListener('click', () => {
-  renderLoadingCard(true)
-  formAddElement.reset()
+  formAddElement.reset();
+  popupWithFormAdd.setEventListeners();
   popupWithFormAdd.open();
 });
+
 buttonAvatar.addEventListener('click', () => {
   formAvatarElement.reset()
   avatarInput.value = avatarImage.src;
+  popupWithFormAvatar.setEventListeners();
   popupWithFormAvatar.open()
-
-  buttonSubmitAvatar.addEventListener('click', () => {
-    renderLoadingAvatar(true)
-    api.changeAvatar(avatarInput)
-      .finally(() => {
-        renderLoadingAvatar(false)
-      })
-    popupWithFormAvatar.close()
-  })
-  
 })
-
 
 // вызываю методы классов
 popupWithImage.setEventListeners();
-
 popupWithFormEdit.setEventListeners();
 popupWithFormAvatar.setEventListeners();
 popupWithFormDelete.setEventListeners();
