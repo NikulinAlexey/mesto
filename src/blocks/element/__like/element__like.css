@@ -2,11 +2,11 @@
   background-image: url(../../../images/like.svg);
   background-color: #fff;
   background-size: cover;
-  width: 22px;
-  height: 19px;
-  margin: auto 0;
   opacity: 1;
   border: 0;
+  width: 22px;
+  height: 19px;
+  padding: 0;
   transition: all .3s ease-in-out;
 }
 

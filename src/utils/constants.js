@@ -35,6 +35,13 @@ export const validationConfig = {
 };
 export const buttonEdit = document.querySelector('.profile__edit-button');
 export const buttonAdd = document.querySelector('.profile__add-button');
+export const buttonAvatar = document.querySelector('.profile__avatar-mask');
+export const buttonDelete = document.querySelector('.element__trash');
+
+export const buttonSubmitDelete = document.querySelector('.popup__submit_type_delete');
+export const buttonSubmitAvatar = document.querySelector('.popup__submit_type_avatar');
+export const buttonSubmitEdit = document.querySelector('.popup__submit_type_edit');
+export const buttonSubmitAdd = document.querySelector('.popup__submit_type_add');
 
 export const imagePopupImage = document.querySelector('.image-popup__image');
 export const textPopupImage = document.querySelector('.image-popup__title');
@@ -52,12 +59,16 @@ export const nameInput = document.querySelector('.popup__input_type_name');
 export const jobInput = document.querySelector('.popup__input_type_job');
 export const placeInput = document.querySelector('.popup__input_type_place');
 export const linkInput = document.querySelector('.popup__input_type_link');
+export const avatarInput = document.querySelector('.popup__input_type_avatar');
 
 export const nameProfile = document.querySelector('.profile__name');
 export const jobProfile = document.querySelector('.profile__job');
+export const avatarImage = document.querySelector('.profile__avatar');
 
 export const formEditElement = document.querySelector('.popup__form_type_edit');
 export const formAddElement = document.querySelector('.popup__form_type_add');
+export const formAvatarElement = document.querySelector('.popup__form_type_avatar');
+export const formDeleteElement = document.querySelector('.popup__form_type_delete');
 
 export const formList = Array.from(document.querySelectorAll(validationConfig.formSelector));
 export const elements = document.querySelector('.elements');
