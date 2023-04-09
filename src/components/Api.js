@@ -62,8 +62,6 @@ export default class Api {
     });
   } 
 
-
-
   addLike(data) {
     
     return fetch(`${this._baseUrl}/cards/${data._id}/likes`, {
