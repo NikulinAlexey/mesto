@@ -84,8 +84,9 @@ Promise.all([api.getProfileInfo(), api.getInitialCards()])
     console.log(err)
   })
   .finally(() => {
-    
+
   })
+
 
 // добавляю лайк (отправляю его на сервер)
 function addLike(id) {
