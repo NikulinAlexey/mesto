@@ -1,13 +1,19 @@
 export default class Card {
-  constructor(data, templateSelector, handleCardClick, handleDeleteClick, handleLikeClick) {
+  constructor(data, templateSelector, handleCardClick, handleDeleteClick, addLike, removeLike, id) {
     this._templateSelector = templateSelector;
-    this._data = data;
-    this._place = this._data.name;
-    this._link = this._data.link;
-    this._handleCardClick = handleCardClick;
-    this._handleDeleteClick = handleDeleteClick;
-    this._likeCount = this._data.likes.length;
-    this._handleLikeClick = handleLikeClick;
+
+    this._data = data; // это обект с данными о карточке
+
+    this._place = this._data.name; // текст карточки(место) 
+    this._link = this._data.link; // ссылка на картинку карточки
+
+    this._addLike = addLike;  // колбек лайка карточки
+    this._removeLike = removeLike // колбек удаления лайка карточки
+    this._handleCardClick = handleCardClick; // колбек открытия попап с картинкой
+    this._handleDeleteClick = handleDeleteClick;  // колбек открытия попап с подтверждением удаления
+    
+    this._userId = id; // это id  карточки
+    this._cardOwnerId = this._data.owner._id
   }
 
   _getTemplate() {
@@ -21,26 +27,53 @@ export default class Card {
     this._buttonLike = cardElement.querySelector('.element__like');
     this._buttonDelete = cardElement.querySelector('.element__trash');
     this._likeCount = cardElement.querySelector('.element__like-count');
+    this._cardId = this._data._id
 
     return cardElement;
   }
 
-  _toggleLike() {
-    this._buttonLike.classList.toggle('element__like_active');
-  }
-  _deleteCard() {
-    this._element.remove()
-    this._element = null;
+  _makeButtonActive() {
+    this._buttonLike.classList.add('element__like_active');
   }
 
+  _makeButtonInactive() {
+    this._buttonLike.classList.remove('element__like_active');
+  }
+
+  _toggleLike() {
+    this._buttonLike.classList.toggle('element__like_active')
+  }
+  _removeCard() {
+    this._element.remove()
+    this._element = null
+  }
   _setEventListeners () {
-    this._buttonLike.addEventListener('click', (evt) => {
-      this._handleLikeClick(evt, this._data, this._buttonLike, this._likeCount);
+    this._buttonLike.addEventListener('click', () => { 
+      const likeButtonState = this._data.likes.some(item => {
+        if (item._id === this._userId) {
+          return true;
+        }
+        else if (item._id !== this._userId){
+          return false;
+        }
+      })
+
+      // если на карточке нет лайков, то добавить мой
+      if (this._data.likes.length === 0) {
+        this._addLike(this._cardId)
+      } //если есть мой лайк, то удаляю свой лайк
+      else if (likeButtonState) {
+        this._removeLike(this._cardId)
+      } //если нет моего лайка, то добавляю
+      else {
+        this._addLike(this._cardId)
+      }
     })
+  
     this._buttonDelete.addEventListener('click', () => {
-      this._handleDeleteClick(this._data, this._element);
-      
+      this._handleDeleteClick(this._cardId);
     })
+
     this._image.addEventListener('click', () => {
       this._handleCardClick(this._place, this._link)
     });
@@ -50,23 +83,29 @@ export default class Card {
     this._element = this._getTemplate();
     this._setEventListeners();
 
+    // вставляю данные в карточку
     this._image.setAttribute('src', `${this._link}`);
     this._image.setAttribute('alt', `${this._place}`);
     this._element.querySelector('.element__title').textContent = `${this._place}`;
     
-    if (this._data.owner._id !== '70f26519fef7b04423e7c847') {
+    // рисую иконку удаления карточки только на своих карточках
+    if (this._cardOwnerId !== this._userId) {
       this._buttonDelete.remove()
       this._buttonDelete = null;
     }
-
-    this._data.likes.forEach((item) => {
-      if (item._id === '70f26519fef7b04423e7c847') {
-        this._buttonLike.classList.add('element__like_active')
+    // окрашиваю лайкнутые мною карточки в активный цвет
+    this._data.likes.forEach((item) => { 
+      if (item._id === this._userId) {
+        this._makeButtonActive()
+      }
+      else {
+        this._makeButtonInactive()
       }
     })
-    
+    // устанавливаю кол-во лайков каждой карточке
     this._likeCount.textContent = this._data.likes.length;
-
+    
     return this._element;
   }
 }
+

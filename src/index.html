@@ -29,6 +29,7 @@
         <button class="profile__add-button" type="button" aria-label="Добавить"></button>
       </section>
       
+      <div class="spinner"><i></i></div>
       <section class="elements">
       </section>
     </main>
@@ -80,7 +81,6 @@
           placeholder="Название"
           required
           minlength="2"
-          maxlength="30"
         >
         <span  id="place-input-error" class="popup__error"></span>
         <input type="url"
@@ -108,7 +108,6 @@
           placeholder="Ссылка на картинку"
           required
           minlength="2"
-          maxlength="500"
         >
         <span id="avatar-input-error" class="popup__error"></span>
         <button type="submit" class="popup__submit popup__submit_type_avatar">Сохранить</button>

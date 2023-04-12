@@ -4,24 +4,33 @@ export default class Api {
     this._headers = headers;
   }
 
-  getProfileInfo() {
-    return fetch(`${this._baseUrl}/users/me`, {
+  async getProfileInfo() {
+    const res = await fetch(`${this._baseUrl}/users/me`, {
       headers: {
         authorization: '380de586-8df7-40d5-9ea1-f2891fd44b6d'
       }
     });
+    if (res.ok) {
+      return res.json();
+    }
+    return await Promise.reject(`Ошибка: ${res.status}`);
   }
 
-  getInitialCards() {
-    return fetch(`${this._baseUrl}/cards`, {
+
+  async getInitialCards() {
+    const res = await fetch(`${this._baseUrl}/cards`, {
       headers: {
         authorization: '380de586-8df7-40d5-9ea1-f2891fd44b6d'
       }
-    })
-  } 
+    });
+    if (res.ok) {
+      return res.json();
+    }
+    return await Promise.reject(`Ошибка: ${res.status}`);
+  }
 
-  editProfileInfo(userData) {
-    return fetch(`${this._baseUrl}/users/me`, {
+  async editProfileInfo(userData) {
+    const res = await fetch(`${this._baseUrl}/users/me`, {
       method: 'PATCH',
       headers: {
         authorization: '380de586-8df7-40d5-9ea1-f2891fd44b6d',
@@ -31,11 +40,15 @@ export default class Api {
         name: `${userData.name}`,
         about: `${userData.job}`
       })
-    }); 
+    });
+    if (res.ok) {
+      return res.json();
+    }
+    return await Promise.reject(`Ошибка: ${res.status}`);
   } 
 
-  addNewCard(cardData) {
-    return fetch(`${this._baseUrl}/cards`, {
+  async addNewCard(cardData) {
+    const res = await fetch(`${this._baseUrl}/cards`, {
       method: 'POST',
       headers: {
         authorization: '380de586-8df7-40d5-9ea1-f2891fd44b6d',
@@ -45,11 +58,15 @@ export default class Api {
         name: `${cardData.place}`,
         link: `${cardData.link}`
       })
-    }); 
+    });
+    if (res.ok) {
+      return res.json();
+    }
+    return await Promise.reject(`Ошибка: ${res.status}`);
   }
 
-  deleteCard(data) {
-    return fetch(`${this._baseUrl}/cards/${data._id}`, {
+  async deleteCard(id) {
+    const res = await fetch(`${this._baseUrl}/cards/${id}`, {
       method: 'DELETE',
       headers: {
         authorization: '380de586-8df7-40d5-9ea1-f2891fd44b6d',
@@ -57,14 +74,17 @@ export default class Api {
       },
       body: JSON.stringify({
         likes: [],
-        _id: `${data._id}`,
+        _id: `${id}`,
       })
     });
+    if (res.ok) {
+      return res.json();
+    }
+    return await Promise.reject(`Ошибка: ${res.status}`);
   } 
 
-  addLike(data) {
-    
-    return fetch(`${this._baseUrl}/cards/${data._id}/likes`, {
+  async addLike(id) {
+    const res = await fetch(`${this._baseUrl}/cards/${id}/likes`, {
       method: 'PUT',
       headers: {
         authorization: '380de586-8df7-40d5-9ea1-f2891fd44b6d',
@@ -72,13 +92,17 @@ export default class Api {
       },
       body: JSON.stringify({
         likes: [],
-        _id: `${data._id}`,
+        _id: `${id}`,
       })
-    }); 
+    });
+    if (res.ok) {
+      return res.json();
+    }
+    return await Promise.reject(`Ошибка: ${res.status}`);
   }
 
-  removeLike(data) {
-    return fetch(`${this._baseUrl}/cards/${data._id}/likes`, {
+  async removeLike(id) {
+    const res = await fetch(`${this._baseUrl}/cards/${id}/likes`, {
       method: 'DELETE',
       headers: {
         authorization: '380de586-8df7-40d5-9ea1-f2891fd44b6d',
@@ -86,13 +110,17 @@ export default class Api {
       },
       body: JSON.stringify({
         likes: [],
-        _id: `${data._id}`,
+        _id: `${id}`,
       })
-    }); 
+    });
+    if (res.ok) {
+      return res.json();
+    }
+    return await Promise.reject(`Ошибка: ${res.status}`);
   }
   
-  changeAvatar(inputValue) {
-    return fetch(`${this._baseUrl}/users/me/avatar`, {
+  async changeAvatar(inputValue) {
+    const res = await fetch(`${this._baseUrl}/users/me/avatar`, {
       method: 'PATCH',
       headers: {
         authorization: '380de586-8df7-40d5-9ea1-f2891fd44b6d',
@@ -101,6 +129,10 @@ export default class Api {
       body: JSON.stringify({
         avatar: `${inputValue}`,
       })
-    }); 
+    });
+    if (res.ok) {
+      return res.json();
+    }
+    return await Promise.reject(`Ошибка: ${res.status}`);
   }
 }
