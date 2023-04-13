@@ -1,17 +1,13 @@
 export default class Card {
   constructor(data, templateSelector, handleCardClick, handleDeleteClick, addLike, removeLike, id) {
     this._templateSelector = templateSelector;
-
     this._data = data; // это обект с данными о карточке
-
     this._place = this._data.name; // текст карточки(место) 
     this._link = this._data.link; // ссылка на картинку карточки
-
     this._addLike = addLike;  // колбек лайка карточки
     this._removeLike = removeLike // колбек удаления лайка карточки
     this._handleCardClick = handleCardClick; // колбек открытия попап с картинкой
     this._handleDeleteClick = handleDeleteClick;  // колбек открытия попап с подтверждением удаления
-    
     this._userId = id; // это id  карточки
     this._cardOwnerId = this._data.owner._id
   }
@@ -43,13 +39,14 @@ export default class Card {
     this._buttonLike.classList.toggle('element__like_active')
     this._likeCount.textContent = data.likes.length
   }
- 
 
   removeCard() {
     this._element.remove()
   }
-  setEventListeners () {
+
+  _setEventListeners () {
     this._buttonLike.addEventListener('click', () => {
+      // вычисляю лайкнута ли карточка
       const cardLiked = this._data.likes.some(item => {
         if (item._id === this._userId) {
           return true;
@@ -82,7 +79,7 @@ export default class Card {
 
   generateCard() {
     this._element = this._getTemplate();
-    this.setEventListeners();
+    this._setEventListeners();
 
     this._likeCount = this._element.querySelector('.element__like-count');
     // вставляю данные в карточку
@@ -95,6 +92,7 @@ export default class Card {
       this._buttonDelete.remove()
       this._buttonDelete = null;
     }
+
     // окрашиваю лайкнутые мною карточки в активный цвет
     this._data.likes.forEach((item) => {
       if (item._id === this._userId) {
@@ -104,6 +102,7 @@ export default class Card {
         this.makeButtonInactive()
       }
     })
+
     // устанавливаю кол-во лайков каждой карточке
     this._likeCount.textContent = this._data.likes.length
     

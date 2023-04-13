@@ -6,7 +6,6 @@ import Section from "./components/Section.js"
 import UserInfo from "./components/UserInfo.js"; 
 import Api from "./components/Api.js";
 import PopupWithConfirm from "./components/PopupWithConfirm.js";
-
 import {
   validationConfig,
 
@@ -42,12 +41,13 @@ const images = [
   { name: 'avtar', image: avtar },
   { name: 'logo', image: logo },
 ];
+
 // импорт главного файла стилей 
 import './index.css';
 
+// переменные, которые я получаю после запроса Promise.all
 let userId;
 let cards;
-let likeCounter
 
 // создание дочерних классов
 const popupWithImage = new PopupWithImage('.image-popup_type_image', imagePopupImage, textPopupImage);
@@ -88,9 +88,6 @@ Promise.all([api.getProfileInfo(), api.getInitialCards()])
 
   })
 
-
-
-
 // добавляю лайк (отправляю его на сервер)
 function addLike(cardId) {
   api.addLike(cardId)
@@ -98,7 +95,7 @@ function addLike(cardId) {
       elements.innerHTML = ''
       
       // ищу индекс старого обьекта, чтобы поменять на ноывй 'res'
-      function indexOf() {
+      function findOldCardIndex() {
         for (let i = 0; i <= cards.length; i++) {
           if (cards[i]._id == cardId) {
             return i
@@ -107,7 +104,7 @@ function addLike(cardId) {
       }
 
       //заменяю старый обьект на новый
-      cards.splice( indexOf(), 1, res);
+      cards.splice( findOldCardIndex(), 1, res);
 
       section.renderItems(cards)
     })
@@ -118,9 +115,6 @@ function addLike(cardId) {
       
     })
 }
-
-
-
 // удаляю лайк (отправляю удаление лайка на сервер)
 function removeLike(cardId) {
   api.removeLike(cardId)
@@ -128,20 +122,16 @@ function removeLike(cardId) {
       elements.innerHTML = ''
 
       // ищу индекс старого обьекта, чтобы поменять на ноывй 'res'
-      function indexOf() {
+      function findOldCardIndex() {
         for (let i = 0; i <= cards.length; i++) {
           if (cards[i]._id == cardId) {
             return i
           }
         }
-
       }
+
       //заменяю старый обьект на новый
-      cards.splice(
-        indexOf()
-        ,
-        1,
-        res);
+      cards.splice(findOldCardIndex(), 1, res);
 
       section.renderItems(cards)
     })
@@ -152,22 +142,6 @@ function removeLike(cardId) {
       
     })
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // --- функция замены текста при загрузке
 function renderLoading(isLoading, button) {
