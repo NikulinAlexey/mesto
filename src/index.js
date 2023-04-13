@@ -30,6 +30,9 @@ import {
 
   cardsContainerSelector,
   elements,
+  formEditElement,
+  formAddElement,
+  formAvatarElement,
 } from "./utils/constants.js";
 
 // импорт картинок Webpack
@@ -43,6 +46,9 @@ const images = [
 import './index.css';
 
 let userId;
+let cards;
+let likeCounter
+
 // создание дочерних классов
 const popupWithImage = new PopupWithImage('.image-popup_type_image', imagePopupImage, textPopupImage);
 const popupWithFormEdit = new PopupWithForm('.popup_type_edit', submitEditProfileForm, validationConfig);
@@ -51,7 +57,12 @@ const popupWithFormAvatar = new PopupWithForm('.popup_type_avatar', handleAvatar
 const popupWithConfirm = new PopupWithConfirm('.popup_type_delete', handleSubmitDelete);
 const userInfo = new UserInfo({ nameSelector: '.profile__name', jobSelector: '.profile__job' }, nameInput, jobInput);
 const api = new Api({ baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-62', headers: { authorization: '380de586-8df7-40d5-9ea1-f2891fd44b6d', 'Content-Type': 'application/json' } })
-
+const section = new Section({
+  data: [],
+  renderer: (item) => {
+    section.setItem(createCard(item, userId))
+  }
+}, cardsContainerSelector)
 
 // класс создания карточки
 function createCard(item, id) {
@@ -60,25 +71,15 @@ function createCard(item, id) {
 
   return cardElement;
 }
-// чтобы вызвать создание класса рендера именно в тот момент, когда нам нужно( из-за ахинхронности)
-function renderer(res, userId) {
-  const section = new Section({
-    data: res,
-    renderer: (item) => {
-      section.setItem(createCard(item, userId))
-    }
-  }, cardsContainerSelector)
-
-  return section;
-}
 
 // запрос на данные пользователя и карточки
 Promise.all([api.getProfileInfo(), api.getInitialCards()])
   .then(([userData, cardsList]) => {
     userInfo.setUserInfo(userData)
-
     userId = userData._id
-    renderer(cardsList, userId).renderItems()
+    cards = cardsList
+
+    section.renderItems(cardsList)
   })
   .catch((err) => {
     console.log(err)
@@ -88,17 +89,27 @@ Promise.all([api.getProfileInfo(), api.getInitialCards()])
   })
 
 
+
+
 // добавляю лайк (отправляю его на сервер)
-function addLike(id) {
-  api.addLike(id)
-    .then(() => {
-      elements.innerHTML = '';
-    })
-    .then(() => {
-      api.getInitialCards()
-        .then(res => {
-          renderer(res, userId).renderItems()
-        })
+function addLike(cardId) {
+  api.addLike(cardId)
+    .then((res) => {
+      elements.innerHTML = ''
+      
+      // ищу индекс старого обьекта, чтобы поменять на ноывй 'res'
+      function indexOf() {
+        for (let i = 0; i <= cards.length; i++) {
+          if (cards[i]._id == cardId) {
+            return i
+          }
+        }
+      }
+
+      //заменяю старый обьект на новый
+      cards.splice( indexOf(), 1, res);
+
+      section.renderItems(cards)
     })
     .catch((err) => {
       console.log('ошибка при лайке')
@@ -107,17 +118,32 @@ function addLike(id) {
       
     })
 }
+
+
+
 // удаляю лайк (отправляю удаление лайка на сервер)
-function removeLike(id) {
-  api.removeLike(id)
-    .then(() => {
-      elements.innerHTML = '';
-    })
-    .then(() => {
-      api.getInitialCards()
-        .then(res => {
-          renderer(res, userId).renderItems()
-        })
+function removeLike(cardId) {
+  api.removeLike(cardId)
+    .then((res) => {
+      elements.innerHTML = ''
+
+      // ищу индекс старого обьекта, чтобы поменять на ноывй 'res'
+      function indexOf() {
+        for (let i = 0; i <= cards.length; i++) {
+          if (cards[i]._id == cardId) {
+            return i
+          }
+        }
+
+      }
+      //заменяю старый обьект на новый
+      cards.splice(
+        indexOf()
+        ,
+        1,
+        res);
+
+      section.renderItems(cards)
     })
     .catch((err) => {
       console.log('ошибка при дизлайке')
@@ -127,13 +153,33 @@ function removeLike(id) {
     })
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // --- функция замены текста при загрузке
 function renderLoading(isLoading, button) {
+  
   if (isLoading) {
     button.textContent = 'Сохранение...';
   }
   else {
-    button.textContent = 'Сохранить';
+    button.textContent = 'Успешно';
+    setTimeout(() => {
+      button.textContent = 'Сохранить';
+    }, 500)
   }
 }
 // --- функция замены текста кнопки во время удаления карточки
@@ -142,7 +188,10 @@ function renderLoadingDelete(isLoading, button) {
     button.textContent = 'Удаление...';
   }
   else {
-    button.textContent = 'Да';
+    button.textContent = 'Успешно';
+    setTimeout(() => {
+      button.textContent = 'Да';
+    }, 500)
   }
 }
 
@@ -154,15 +203,11 @@ function handleSubmitDelete(cardId) {
   api.deleteCard(cardId)
     .then(() => {
       elements.innerHTML = '';
-    })
-    .then(() => {
-      api.getInitialCards()
-        .then(res => {
-          renderer(res, userId).renderItems()
-        })
-    })
-    .then(() => {
-      renderLoadingDelete(false, buttonSubmitDelete)
+
+      const newCards = cards.filter((card) => card._id !== cardId);
+      cards = newCards
+
+      section.renderItems(cards)
     })
     .then(() => {
       popupWithConfirm.close();
@@ -171,7 +216,7 @@ function handleSubmitDelete(cardId) {
       console.log(`Ошибка удаления карточки ${err}`)
     })
     .finally(() => {
-      
+      renderLoadingDelete(false, buttonSubmitDelete)
     })
 }
 // колбек функция открывания попапа с картинкой
@@ -187,34 +232,24 @@ function submitEditProfileForm(valuesData) {
       userInfo.setUserInfo(res)
     })
     .then(() => {
-      renderLoading(false, buttonSubmitEdit)
-    })
-    .then(() => {
       popupWithFormEdit.close();
     })
     .catch((err) => {
       console.log(err)
     })
     .finally(() => {
-      
+      renderLoading(false, buttonSubmitEdit)
     })
 }
 // колбек функция добавления новой карточки через форму попапа
 function handleAddFormSubmit(inputValues) {
   renderLoading(true, buttonSubmitAdd)
-
+  
   api.addNewCard(inputValues)
-    .then(() => {
+    .then((res) => {
       elements.innerHTML = '';
-    })
-    .then(() => {
-        api.getInitialCards()
-          .then(res => {
-            renderer(res, userId).renderItems()
-          })
-    })
-    .then(() => {
-      renderLoading(false, buttonSubmitAdd)
+      cards.unshift(res)
+      section.renderItems(cards)
     })
     .then(() => {
       popupWithFormAdd.close()
@@ -223,7 +258,7 @@ function handleAddFormSubmit(inputValues) {
       console.log(`извините, ошибочка вышла ${err}`)
     })
     .finally(() => {
-      
+      renderLoading(false, buttonSubmitAdd)
     })
 }
 // колбек функция обновления аватарки
@@ -258,7 +293,7 @@ formList.forEach((formElement) => {
 // слушатели кнопок, открывающие popup-ы
 buttonEdit.addEventListener('click', () => {
   const userDataInputs = userInfo.getUserInfo();
-  popupWithFormEdit.setEventListeners();
+  formEditElement.reset()
 
   nameInput.value = userDataInputs.name;
   jobInput.value = userDataInputs.job;
@@ -266,11 +301,12 @@ buttonEdit.addEventListener('click', () => {
   popupWithFormEdit.open();
 });
 buttonAdd.addEventListener('click', () => {
-  popupWithFormAdd.setEventListeners();
+  formAddElement.reset()
+
   popupWithFormAdd.open();
 });
 buttonAvatar.addEventListener('click', () => {
-  popupWithFormAvatar.setEventListeners()
+  formAvatarElement.reset()
   avatarInput.value = avatarImage.src;
   
   popupWithFormAvatar.open()
@@ -281,7 +317,10 @@ function handleDeleteClick(cardId) {
 }
 
 // вызываю методы классов
+popupWithFormEdit.setEventListeners();
+popupWithFormAvatar.setEventListeners()
+popupWithFormAdd.setEventListeners();
 popupWithImage.setEventListeners();
-popupWithConfirm.setEventListeners()
+popupWithConfirm.setEventListeners();
 
 

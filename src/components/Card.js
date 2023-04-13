@@ -26,34 +26,35 @@ export default class Card {
     this._image = cardElement.querySelector('.element__image');
     this._buttonLike = cardElement.querySelector('.element__like');
     this._buttonDelete = cardElement.querySelector('.element__trash');
-    this._likeCount = cardElement.querySelector('.element__like-count');
     this._cardId = this._data._id
 
     return cardElement;
   }
 
-  _makeButtonActive() {
+  makeButtonActive() {
     this._buttonLike.classList.add('element__like_active');
   }
 
-  _makeButtonInactive() {
+  makeButtonInactive() {
     this._buttonLike.classList.remove('element__like_active');
   }
 
-  _toggleLike() {
+  toggleLike(data) {
     this._buttonLike.classList.toggle('element__like_active')
+    this._likeCount.textContent = data.likes.length
   }
-  _removeCard() {
+ 
+
+  removeCard() {
     this._element.remove()
-    this._element = null
   }
-  _setEventListeners () {
-    this._buttonLike.addEventListener('click', () => { 
-      const likeButtonState = this._data.likes.some(item => {
+  setEventListeners () {
+    this._buttonLike.addEventListener('click', () => {
+      const cardLiked = this._data.likes.some(item => {
         if (item._id === this._userId) {
           return true;
         }
-        else if (item._id !== this._userId){
+        else if (item._id !== this._userId) {
           return false;
         }
       })
@@ -62,7 +63,7 @@ export default class Card {
       if (this._data.likes.length === 0) {
         this._addLike(this._cardId)
       } //если есть мой лайк, то удаляю свой лайк
-      else if (likeButtonState) {
+      else if (cardLiked) {
         this._removeLike(this._cardId)
       } //если нет моего лайка, то добавляю
       else {
@@ -81,8 +82,9 @@ export default class Card {
 
   generateCard() {
     this._element = this._getTemplate();
-    this._setEventListeners();
+    this.setEventListeners();
 
+    this._likeCount = this._element.querySelector('.element__like-count');
     // вставляю данные в карточку
     this._image.setAttribute('src', `${this._link}`);
     this._image.setAttribute('alt', `${this._place}`);
@@ -94,16 +96,16 @@ export default class Card {
       this._buttonDelete = null;
     }
     // окрашиваю лайкнутые мною карточки в активный цвет
-    this._data.likes.forEach((item) => { 
+    this._data.likes.forEach((item) => {
       if (item._id === this._userId) {
-        this._makeButtonActive()
+        this.makeButtonActive()
       }
       else {
-        this._makeButtonInactive()
+        this.makeButtonInactive()
       }
     })
     // устанавливаю кол-во лайков каждой карточке
-    this._likeCount.textContent = this._data.likes.length;
+    this._likeCount.textContent = this._data.likes.length
     
     return this._element;
   }

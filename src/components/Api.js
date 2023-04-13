@@ -4,33 +4,34 @@ export default class Api {
     this._headers = headers;
   }
 
-  async getProfileInfo() {
-    const res = await fetch(`${this._baseUrl}/users/me`, {
+  _checkResponse = (res) => {
+    if(res.ok) {
+      return res.json()
+    }
+    return Promise.reject(`Ошибка: ${res.status}`);
+
+}
+  getProfileInfo() {
+    return fetch(`${this._baseUrl}/users/me`, {
       headers: {
         authorization: '380de586-8df7-40d5-9ea1-f2891fd44b6d'
       }
-    });
-    if (res.ok) {
-      return res.json();
-    }
-    return await Promise.reject(`Ошибка: ${res.status}`);
+    })
+      .then(this._checkResponse)
   }
 
 
-  async getInitialCards() {
-    const res = await fetch(`${this._baseUrl}/cards`, {
+  getInitialCards() {
+    return fetch(`${this._baseUrl}/cards`, {
       headers: {
         authorization: '380de586-8df7-40d5-9ea1-f2891fd44b6d'
       }
-    });
-    if (res.ok) {
-      return res.json();
-    }
-    return await Promise.reject(`Ошибка: ${res.status}`);
+    })
+      .then(this._checkResponse)
   }
 
-  async editProfileInfo(userData) {
-    const res = await fetch(`${this._baseUrl}/users/me`, {
+  editProfileInfo(userData) {
+    return fetch(`${this._baseUrl}/users/me`, {
       method: 'PATCH',
       headers: {
         authorization: '380de586-8df7-40d5-9ea1-f2891fd44b6d',
@@ -40,15 +41,12 @@ export default class Api {
         name: `${userData.name}`,
         about: `${userData.job}`
       })
-    });
-    if (res.ok) {
-      return res.json();
-    }
-    return await Promise.reject(`Ошибка: ${res.status}`);
-  } 
+    })
+      .then(this._checkResponse)
+  }
 
-  async addNewCard(cardData) {
-    const res = await fetch(`${this._baseUrl}/cards`, {
+  addNewCard(cardData) {
+    return fetch(`${this._baseUrl}/cards`, {
       method: 'POST',
       headers: {
         authorization: '380de586-8df7-40d5-9ea1-f2891fd44b6d',
@@ -58,15 +56,12 @@ export default class Api {
         name: `${cardData.place}`,
         link: `${cardData.link}`
       })
-    });
-    if (res.ok) {
-      return res.json();
-    }
-    return await Promise.reject(`Ошибка: ${res.status}`);
+    })
+      .then(this._checkResponse)
   }
 
-  async deleteCard(id) {
-    const res = await fetch(`${this._baseUrl}/cards/${id}`, {
+  deleteCard(id) {
+    return fetch(`${this._baseUrl}/cards/${id}`, {
       method: 'DELETE',
       headers: {
         authorization: '380de586-8df7-40d5-9ea1-f2891fd44b6d',
@@ -76,15 +71,12 @@ export default class Api {
         likes: [],
         _id: `${id}`,
       })
-    });
-    if (res.ok) {
-      return res.json();
-    }
-    return await Promise.reject(`Ошибка: ${res.status}`);
-  } 
+    })
+      .then(this._checkResponse)
+  }
 
   async addLike(id) {
-    const res = await fetch(`${this._baseUrl}/cards/${id}/likes`, {
+    return fetch(`${this._baseUrl}/cards/${id}/likes`, {
       method: 'PUT',
       headers: {
         authorization: '380de586-8df7-40d5-9ea1-f2891fd44b6d',
@@ -94,15 +86,12 @@ export default class Api {
         likes: [],
         _id: `${id}`,
       })
-    });
-    if (res.ok) {
-      return res.json();
-    }
-    return await Promise.reject(`Ошибка: ${res.status}`);
+    })
+      .then(this._checkResponse)
   }
 
-  async removeLike(id) {
-    const res = await fetch(`${this._baseUrl}/cards/${id}/likes`, {
+  removeLike(id) {
+    return fetch(`${this._baseUrl}/cards/${id}/likes`, {
       method: 'DELETE',
       headers: {
         authorization: '380de586-8df7-40d5-9ea1-f2891fd44b6d',
@@ -112,15 +101,12 @@ export default class Api {
         likes: [],
         _id: `${id}`,
       })
-    });
-    if (res.ok) {
-      return res.json();
-    }
-    return await Promise.reject(`Ошибка: ${res.status}`);
+    })
+      .then(this._checkResponse)
   }
-  
-  async changeAvatar(inputValue) {
-    const res = await fetch(`${this._baseUrl}/users/me/avatar`, {
+
+  changeAvatar(inputValue) {
+    return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: 'PATCH',
       headers: {
         authorization: '380de586-8df7-40d5-9ea1-f2891fd44b6d',
@@ -129,10 +115,7 @@ export default class Api {
       body: JSON.stringify({
         avatar: `${inputValue}`,
       })
-    });
-    if (res.ok) {
-      return res.json();
-    }
-    return await Promise.reject(`Ошибка: ${res.status}`);
+    })
+      .then(this._checkResponse)
   }
 }
