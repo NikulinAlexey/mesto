@@ -75,7 +75,7 @@ export default class Api {
       .then(this._checkResponse)
   }
 
-  async addLike(id) {
+  addLike(id) {
     return fetch(`${this._baseUrl}/cards/${id}/likes`, {
       method: 'PUT',
       headers: {

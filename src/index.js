@@ -92,21 +92,11 @@ Promise.all([api.getProfileInfo(), api.getInitialCards()])
 function addLike(cardId) {
   api.addLike(cardId)
     .then((res) => {
-      elements.innerHTML = ''
-      
-      // ищу индекс старого обьекта, чтобы поменять на ноывй 'res'
-      function findOldCardIndex() {
-        for (let i = 0; i <= cards.length; i++) {
-          if (cards[i]._id == cardId) {
-            return i
-          }
-        }
-      }
-
-      //заменяю старый обьект на новый
-      cards.splice( findOldCardIndex(), 1, res);
-
-      section.renderItems(cards)
+      this.setNewLikes(res)
+      this._likeCount.textContent = res.likes.length
+    })
+    .then(() => {
+      this.toggleLike()
     })
     .catch((err) => {
       console.log('ошибка при лайке')
@@ -119,21 +109,11 @@ function addLike(cardId) {
 function removeLike(cardId) {
   api.removeLike(cardId)
     .then((res) => {
-      elements.innerHTML = ''
-
-      // ищу индекс старого обьекта, чтобы поменять на ноывй 'res'
-      function findOldCardIndex() {
-        for (let i = 0; i <= cards.length; i++) {
-          if (cards[i]._id == cardId) {
-            return i
-          }
-        }
-      }
-
-      //заменяю старый обьект на новый
-      cards.splice(findOldCardIndex(), 1, res);
-
-      section.renderItems(cards)
+      this.setNewLikes(res)
+      this._likeCount.textContent = res.likes.length
+    })
+    .then(() => {
+      this.toggleLike()
     })
     .catch((err) => {
       console.log('ошибка при дизлайке')
@@ -170,18 +150,12 @@ function renderLoadingDelete(isLoading, button) {
 }
 
 // колбек функция удаления карточки по нажатию на кнопку попапа(удаления карточек)
-function handleSubmitDelete(cardId) {
+function handleSubmitDelete(cardClass) {
   renderLoadingDelete(true, buttonSubmitDelete)
-
-  // удаляю карточку
-  api.deleteCard(cardId)
+  
+  api.deleteCard(cardClass._cardId)
     .then(() => {
-      elements.innerHTML = '';
-
-      const newCards = cards.filter((card) => card._id !== cardId);
-      cards = newCards
-
-      section.renderItems(cards)
+      cardClass.removeCard()
     })
     .then(() => {
       popupWithConfirm.close();
@@ -221,9 +195,7 @@ function handleAddFormSubmit(inputValues) {
   
   api.addNewCard(inputValues)
     .then((res) => {
-      elements.innerHTML = '';
-      cards.unshift(res)
-      section.renderItems(cards)
+      section.setPrependItem(createCard(res, userId))
     })
     .then(() => {
       popupWithFormAdd.close()
@@ -244,16 +216,13 @@ function handleAvatarFormSubmit(valuesData) {
       userInfo.setUserInfo(res)
     })
     .then(() => {
-      renderLoading(false, buttonSubmitAvatar)
-    })
-    .then(() => {
       popupWithFormAvatar.close()
     })
     .catch((err) => {
       console.log(err)
     })
     .finally(() => {
-      
+      renderLoading(false, buttonSubmitAvatar)
     })
 }
 
@@ -286,8 +255,8 @@ buttonAvatar.addEventListener('click', () => {
   popupWithFormAvatar.open()
 })
 // колбек функция откртыия попапа удаления карточки
-function handleDeleteClick(cardId) {
-  popupWithConfirm.open(cardId);
+function handleDeleteClick(cardClass) {
+  popupWithConfirm.open(cardClass);
 }
 
 // вызываю методы классов

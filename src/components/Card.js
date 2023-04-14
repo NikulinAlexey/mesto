@@ -35,16 +35,27 @@ export default class Card {
     this._buttonLike.classList.remove('element__like_active');
   }
 
-  toggleLike(data) {
+  toggleLike() {
     this._buttonLike.classList.toggle('element__like_active')
-    this._likeCount.textContent = data.likes.length
+  }
+
+  _setLikes() {
+    this._likeCount.textContent = this._data.likes.length
+  }
+
+  setNewLikes(data) {
+    this._data.likes = data.likes
+  }
+  setNewData(data) {
+    this._data = data
   }
 
   removeCard() {
     this._element.remove()
+    this._element = null
   }
 
-  _setEventListeners () {
+  _setEventListeners() {
     this._buttonLike.addEventListener('click', () => {
       // вычисляю лайкнута ли карточка
       const cardLiked = this._data.likes.some(item => {
@@ -58,18 +69,17 @@ export default class Card {
 
       // если на карточке нет лайков, то добавить мой
       if (this._data.likes.length === 0) {
-        this._addLike(this._cardId)
+        this._addLike(this._cardId, this._likeCount)
       } //если есть мой лайк, то удаляю свой лайк
       else if (cardLiked) {
-        this._removeLike(this._cardId)
+        this._removeLike(this._cardId, this._likeCount)
       } //если нет моего лайка, то добавляю
       else {
-        this._addLike(this._cardId)
+        this._addLike(this._cardId, this._likeCount)
       }
     })
-  
     this._buttonDelete.addEventListener('click', () => {
-      this._handleDeleteClick(this._cardId);
+      this._handleDeleteClick(this);
     })
 
     this._image.addEventListener('click', () => {
@@ -101,10 +111,8 @@ export default class Card {
       else {
         this.makeButtonInactive()
       }
-    })
-
-    // устанавливаю кол-во лайков каждой карточке
-    this._likeCount.textContent = this._data.likes.length
+    })  
+    this._setLikes()
     
     return this._element;
   }
